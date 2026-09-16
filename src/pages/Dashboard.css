@@ -1,0 +1,951 @@
+/* ========================================
+   DASHBOARD
+======================================== */
+
+.dashboard-page {
+    min-height: 100vh;
+    background: #f5f8fc;
+    color: #17365d;
+}
+
+
+/* ========================================
+   LOADING
+======================================== */
+
+.dashboard-loading {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f8fc;
+
+    color: #17365d;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   NAVBAR
+======================================== */
+
+.dashboard-navbar {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5eaf1;
+
+    box-sizing: border-box;
+}
+
+.dashboard-logo {
+    font-size: 24px;
+    font-weight: 800;
+
+    color: #17365d;
+}
+
+.dashboard-logo span {
+    color: #ff7a00;
+}
+
+.dashboard-navbar-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* ========================================
+   BOTÕES NAVBAR
+======================================== */
+
+.dashboard-vagas-button,
+.dashboard-sair-button {
+    border-radius: 8px;
+
+    padding: 10px 18px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.dashboard-vagas-button {
+    background: #ffffff;
+
+    color: #17365d;
+
+    border: 1px solid #d6deea;
+}
+
+.dashboard-vagas-button:hover {
+    background: #f1f5fa;
+}
+
+.dashboard-sair-button {
+    background: #17365d;
+
+    color: #ffffff;
+
+    border: 1px solid #17365d;
+}
+
+.dashboard-sair-button:hover {
+    background: #0f2948;
+}
+
+
+/* ========================================
+   CONTAINER
+======================================== */
+
+.dashboard-container {
+    width: min(1120px, 92%);
+
+    margin: 0 auto;
+
+    padding: 50px 0 80px;
+}
+
+
+/* ========================================
+   BOAS-VINDAS
+======================================== */
+
+.dashboard-welcome {
+    margin-bottom: 30px;
+}
+
+.dashboard-label {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+.dashboard-welcome h1 {
+    margin: 0 0 10px;
+
+    color: #17365d;
+
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.dashboard-welcome p {
+    margin: 0;
+
+    color: #61738d;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   PERFIL
+======================================== */
+
+.dashboard-profile-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e9f1;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.05);
+}
+
+.dashboard-profile-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #718198;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+}
+
+.dashboard-profile-card h2 {
+    margin: 0;
+
+    color: #17365d;
+
+    font-size: 21px;
+}
+
+.dashboard-profile-info {
+    display: flex;
+
+    gap: 35px;
+}
+
+.dashboard-profile-info div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.dashboard-profile-info span {
+    color: #718198;
+
+    font-size: 11px;
+}
+
+.dashboard-profile-info strong {
+    color: #17365d;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   SEÇÕES
+======================================== */
+
+.dashboard-section {
+    margin-bottom: 28px;
+}
+
+.dashboard-section-header {
+    margin-bottom: 18px;
+}
+
+.dashboard-section-header h2 {
+    margin: 0 0 7px;
+
+    color: #17365d;
+
+    font-size: 24px;
+}
+
+.dashboard-section-header p {
+    margin: 0;
+
+    color: #61738d;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   COMPETÊNCIAS
+======================================== */
+
+.dashboard-skills {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.dashboard-skill {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 12px;
+
+    background: #ffffff;
+
+    color: #17365d;
+
+    border: 1px solid #dce4ee;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.remove-skill {
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #edf1f5;
+
+    color: #718198;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.remove-skill:hover {
+    background: #ffe4e4;
+
+    color: #d33;
+}
+
+
+/* ========================================
+   ADICIONAR COMPETÊNCIA
+======================================== */
+
+.add-skill-button {
+    border: 1px solid #2563eb;
+
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    background: #ffffff;
+
+    color: #2563eb;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.add-skill-button:hover {
+    background: #eff6ff;
+}
+
+.add-skill-form {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 14px;
+
+    padding: 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e9f1;
+
+    border-radius: 10px;
+}
+
+.add-skill-form select {
+    min-width: 250px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d5deea;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #17365d;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.add-skill-form select:focus {
+    border-color: #2563eb;
+}
+
+.add-skill-form button {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px 17px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.add-skill-form button:hover {
+    background: #1d4ed8;
+}
+
+.add-skill-form button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* ========================================
+   DIAGNÓSTICO
+======================================== */
+
+.dashboard-diagnostic-card {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e9f1;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.05);
+}
+
+
+/* ========================================
+   SCORE
+======================================== */
+
+.dashboard-score {
+    display: flex;
+    align-items: baseline;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+.dashboard-score strong {
+    color: #17365d;
+
+    font-size: 38px;
+}
+
+.dashboard-score span {
+    color: #61738d;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   PROGRESSO
+======================================== */
+
+.dashboard-progress {
+    width: 100%;
+
+    height: 10px;
+
+    margin-bottom: 25px;
+
+    background: #e5eaf1;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.dashboard-progress-bar {
+    height: 100%;
+
+    background: #2563eb;
+
+    border-radius: 10px;
+
+    transition: width 0.4s ease;
+}
+
+
+/* ========================================
+   GRID DIAGNÓSTICO
+======================================== */
+
+.dashboard-diagnostic-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.dashboard-diagnostic-item {
+    padding: 18px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e4e9f0;
+
+    border-radius: 12px;
+}
+
+.dashboard-diagnostic-item h3 {
+    margin: 0 0 13px;
+
+    color: #17365d;
+
+    font-size: 14px;
+}
+
+.dashboard-diagnostic-item ul {
+    margin: 0;
+
+    padding-left: 20px;
+}
+
+.dashboard-diagnostic-item li {
+    margin-bottom: 7px;
+
+    color: #61738d;
+
+    font-size: 13px;
+}
+
+.dashboard-diagnostic-item p {
+    margin: 0;
+
+    color: #61738d;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* ========================================
+   CURSOS
+======================================== */
+
+.dashboard-courses {
+    margin-top: 22px;
+}
+
+.dashboard-courses h3 {
+    margin: 0 0 13px;
+
+    color: #17365d;
+
+    font-size: 15px;
+}
+
+.dashboard-course-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.dashboard-course {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 15px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e4e9f0;
+
+    border-radius: 10px;
+}
+
+.dashboard-course strong {
+    color: #17365d;
+
+    font-size: 13px;
+}
+
+.dashboard-course span {
+    color: #718198;
+
+    font-size: 12px;
+}
+
+
+/* ========================================
+   MINHAS CANDIDATURAS
+======================================== */
+
+.candidaturas-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.candidatura-card {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 25px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e9f1;
+
+    border-radius: 14px;
+
+    box-shadow: 0 6px 20px rgba(23, 54, 93, 0.05);
+
+    transition: 0.2s ease;
+}
+
+.candidatura-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 25px rgba(23, 54, 93, 0.08);
+}
+
+.candidatura-main {
+    flex: 1;
+}
+
+.candidatura-company {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #2563eb;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.candidatura-main h3 {
+    margin: 0 0 10px;
+
+    color: #17365d;
+
+    font-size: 20px;
+}
+
+.candidatura-description {
+    margin: 0 0 14px;
+
+    color: #61738d;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+.candidatura-info {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    color: #61738d;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.candidatura-status-area {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 10px;
+
+    min-width: 150px;
+}
+
+.candidatura-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 8px 13px;
+
+    background: #e8f7ee;
+
+    color: #168344;
+
+    border: 1px solid #c9ecd7;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.candidatura-date {
+    color: #718198;
+
+    font-size: 11px;
+}
+
+
+/* ========================================
+   SEM CANDIDATURAS
+======================================== */
+
+.candidaturas-empty {
+    text-align: center;
+
+    padding: 35px 25px;
+
+    background: #ffffff;
+
+    border: 1px dashed #ccd6e3;
+
+    border-radius: 14px;
+}
+
+.candidaturas-empty-icon {
+    margin-bottom: 10px;
+
+    font-size: 30px;
+}
+
+.candidaturas-empty h3 {
+    margin: 0 0 8px;
+
+    color: #17365d;
+
+    font-size: 18px;
+}
+
+.candidaturas-empty p {
+    max-width: 500px;
+
+    margin: 0 auto 18px;
+
+    color: #61738d;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.candidaturas-vagas-button {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 11px 20px;
+
+    background: #ff7a00;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.candidaturas-vagas-button:hover {
+    background: #e86e00;
+}
+
+
+/* ========================================
+   CTA
+======================================== */
+
+.dashboard-cta {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 30px;
+
+    background: #17365d;
+
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(23, 54, 93, 0.12);
+}
+
+.dashboard-cta span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #8fb4e8;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.dashboard-cta h2 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 23px;
+}
+
+.dashboard-cta p {
+    margin: 0;
+
+    color: #d3deec;
+
+    font-size: 13px;
+}
+
+.dashboard-cta button {
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px 20px;
+
+    background: #ff7a00;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.dashboard-cta button:hover {
+    background: #e86e00;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 768px) {
+
+    .dashboard-navbar {
+        padding: 0 20px;
+    }
+
+    .dashboard-container {
+        width: calc(100% - 30px);
+
+        padding-top: 35px;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 28px;
+    }
+
+    .dashboard-profile-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .dashboard-profile-info {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .dashboard-diagnostic-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-course-list {
+        grid-template-columns: 1fr;
+    }
+
+    .candidatura-card {
+        flex-direction: column;
+    }
+
+    .candidatura-status-area {
+        width: 100%;
+
+        align-items: flex-start;
+    }
+
+    .dashboard-cta {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .dashboard-cta button {
+        width: 100%;
+    }
+
+    .add-skill-form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .add-skill-form select {
+        width: 100%;
+
+        min-width: 0;
+
+        box-sizing: border-box;
+    }
+
+}
