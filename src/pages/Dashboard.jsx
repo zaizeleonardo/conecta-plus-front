@@ -1,29 +1,28 @@
 import { useEffect, useState } from 'react'
-
 import './Dashboard.css'
+import API_URL from '../config/api'
 
-function Dashboard({ usuario, onVagas, onSair }) {
+function Dashboard({
+  usuario,
+  onVagas,
+  onUsuarios,
+  onGerenciarVagas,
+  onGerenciarCursos,
+  onSair
+}) {
 
   // ==============================
   // ESTADOS
   // ==============================
 
   const [competencias, setCompetencias] = useState([])
-
   const [todasCompetencias, setTodasCompetencias] = useState([])
-
   const [diagnostico, setDiagnostico] = useState(null)
-
   const [candidaturas, setCandidaturas] = useState([])
-
   const [vagas, setVagas] = useState([])
-
   const [carregando, setCarregando] = useState(true)
-
   const [mostrarAdicionar, setMostrarAdicionar] = useState(false)
-
   const [competenciaSelecionada, setCompetenciaSelecionada] = useState('')
-
   const [salvandoCompetencia, setSalvandoCompetencia] = useState(false)
 
 
@@ -37,15 +36,13 @@ function Dashboard({ usuario, onVagas, onSair }) {
 
       setCarregando(true)
 
-
       // ==============================
       // CARREGAR COMPETÊNCIAS DO USUÁRIO
       // ==============================
 
       const respostaCompetencias = await fetch(
-        `http://localhost:8080/usuarios/${usuario.id}/competencias`
+        `${API_URL}/usuarios/${usuario.id}/competencias`
       )
-
       if (respostaCompetencias.ok) {
 
         const dadosCompetencias =
@@ -61,7 +58,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
       // ==============================
 
       const respostaTodasCompetencias = await fetch(
-        'http://localhost:8080/competencias'
+        `${API_URL}/competencias`
       )
 
       if (respostaTodasCompetencias.ok) {
@@ -79,9 +76,8 @@ function Dashboard({ usuario, onVagas, onSair }) {
       // ==============================
 
       const respostaVagas = await fetch(
-        'http://localhost:8080/vagas'
+        `${API_URL}/vagas`
       )
-
       if (respostaVagas.ok) {
 
         const dadosVagas =
@@ -97,7 +93,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
       // ==============================
 
       const respostaCandidaturas = await fetch(
-        `http://localhost:8080/candidaturas/usuario/${usuario.id}`
+        `${API_URL}/candidaturas/usuario/${usuario.id}`
       )
 
       if (respostaCandidaturas.ok) {
@@ -115,7 +111,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
       // ==============================
 
       const respostaDiagnostico = await fetch(
-        `http://localhost:8080/diagnosticos/usuarios/${usuario.id}/vagas/1`
+        `${API_URL}/diagnosticos/usuarios/${usuario.id}/vagas/1`
       )
 
       if (respostaDiagnostico.ok) {
@@ -173,7 +169,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
       setSalvandoCompetencia(true)
 
       const resposta = await fetch(
-        `http://localhost:8080/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
+        `${API_URL}/usuarios/${usuario.id}/competencias/${competenciaSelecionada.id}`,
         {
           method: 'POST'
         }
@@ -181,7 +177,8 @@ function Dashboard({ usuario, onVagas, onSair }) {
 
       if (!resposta.ok) {
 
-        const mensagem = await resposta.text()
+        const mensagem =
+          await resposta.text()
 
         alert(
           mensagem ||
@@ -197,7 +194,6 @@ function Dashboard({ usuario, onVagas, onSair }) {
       )
 
       setCompetenciaSelecionada('')
-
       setMostrarAdicionar(false)
 
       await carregarDados()
@@ -226,9 +222,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
   // REMOVER COMPETÊNCIA
   // ==============================
 
-  async function removerCompetencia(
-    competenciaId
-  ) {
+  async function removerCompetencia(competenciaId) {
 
     const competencia =
       competencias.find(
@@ -250,12 +244,11 @@ function Dashboard({ usuario, onVagas, onSair }) {
     try {
 
       const resposta = await fetch(
-        `http://localhost:8080/usuarios/${usuario.id}/competencias/${competenciaId}`,
+        `${API_URL}/usuarios/${usuario.id}/competencias/${competenciaId}`,
         {
           method: 'DELETE'
         }
       )
-
       if (!resposta.ok) {
 
         alert(
@@ -331,11 +324,13 @@ function Dashboard({ usuario, onVagas, onSair }) {
   if (carregando) {
 
     return (
+
       <div className="dashboard-loading">
 
         Carregando seu dashboard...
 
       </div>
+
     )
 
   }
@@ -388,6 +383,30 @@ function Dashboard({ usuario, onVagas, onSair }) {
 
 
           <button
+            className="dashboard-vagas-button"
+            onClick={onUsuarios}
+          >
+            Gerenciar usuários
+          </button>
+
+
+          <button
+            className="dashboard-vagas-button"
+            onClick={onGerenciarVagas}
+          >
+            Gerenciar vagas
+          </button>
+
+
+          <button
+            className="dashboard-vagas-button"
+            onClick={onGerenciarCursos}
+          >
+            Gerenciar cursos
+          </button>
+
+
+          <button
             className="dashboard-sair-button"
             onClick={onSair}
           >
@@ -416,9 +435,11 @@ function Dashboard({ usuario, onVagas, onSair }) {
             MEU PERFIL
           </span>
 
+
           <h1>
             Olá, {usuario.nome}! 👋
           </h1>
+
 
           <p>
             Acompanhe suas competências,
@@ -441,9 +462,12 @@ function Dashboard({ usuario, onVagas, onSair }) {
               OBJETIVO PROFISSIONAL
             </span>
 
+
             <h2>
+
               {usuario.objetivoProfissional ||
                 'Objetivo profissional não informado'}
+
             </h2>
 
           </div>
@@ -495,9 +519,11 @@ function Dashboard({ usuario, onVagas, onSair }) {
                 DESENVOLVIMENTO
               </span>
 
+
               <h2>
                 Minhas competências
               </h2>
+
 
               <p>
                 Gerencie as competências que fazem
@@ -640,9 +666,11 @@ function Dashboard({ usuario, onVagas, onSair }) {
                 OPORTUNIDADES
               </span>
 
+
               <h2>
                 Minhas candidaturas
               </h2>
+
 
               <p>
                 Acompanhe as vagas para as quais
@@ -662,15 +690,18 @@ function Dashboard({ usuario, onVagas, onSair }) {
                 📋
               </div>
 
+
               <h3>
                 Você ainda não possui candidaturas
               </h3>
+
 
               <p>
                 Explore as vagas disponíveis e
                 encontre uma oportunidade compatível
                 com seu perfil.
               </p>
+
 
               <button
                 className="candidaturas-vagas-button"
@@ -692,6 +723,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
                     encontrarVaga(
                       candidatura.vagaId
                     )
+
 
                   return (
 
@@ -820,9 +852,11 @@ function Dashboard({ usuario, onVagas, onSair }) {
                 DIAGNÓSTICO
               </span>
 
+
               <h2>
                 Sua compatibilidade profissional
               </h2>
+
 
               <p>
                 Veja como suas competências se
@@ -847,6 +881,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
                 <strong>
                   {diagnostico.percentualCompatibilidade?.toFixed(2)}%
                 </strong>
+
 
                 <span>
                   de compatibilidade
@@ -975,6 +1010,7 @@ function Dashboard({ usuario, onVagas, onSair }) {
                             {curso.nome}
                           </strong>
 
+
                           <span>
                             {curso.plataforma}
                           </span>
@@ -1009,10 +1045,12 @@ function Dashboard({ usuario, onVagas, onSair }) {
               NOVAS OPORTUNIDADES
             </span>
 
+
             <h2>
               Encontre vagas compatíveis
               com seu perfil.
             </h2>
+
 
             <p>
               Consulte seu percentual de
