@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
@@ -7,11 +7,32 @@ import Usuarios from './pages/Usuarios'
 import GerenciarVagas from './pages/GerenciarVagas'
 import GerenciarCursos from './pages/GerenciarCursos.jsx'
 import API_URL from './config/api'
+
 function App() {
 
   const [pagina, setPagina] = useState('inicio')
 
   const [usuarioLogado, setUsuarioLogado] = useState(null)
+
+  // ==============================
+  // RECUPERAR LOGIN SALVO
+  // ==============================
+
+  useEffect(() => {
+
+    const usuarioSalvo =
+      localStorage.getItem('usuarioLogado')
+
+    if (usuarioSalvo) {
+
+      setUsuarioLogado(
+        JSON.parse(usuarioSalvo)
+      )
+
+      setPagina('dashboard')
+    }
+
+  }, [])
 
 
   // ==============================
@@ -43,6 +64,10 @@ function App() {
 
         onSair={() => {
 
+          localStorage.removeItem(
+            'usuarioLogado'
+          )
+
           setUsuarioLogado(null)
 
           setPagina('inicio')
@@ -71,6 +96,10 @@ function App() {
 
         onSair={() => {
 
+          localStorage.removeItem(
+            'usuarioLogado'
+          )
+
           setUsuarioLogado(null)
 
           setPagina('inicio')
@@ -91,11 +120,16 @@ function App() {
     return (
 
       <GerenciarVagas
+
         onVoltar={() =>
           setPagina('dashboard')
         }
 
         onSair={() => {
+
+          localStorage.removeItem(
+            'usuarioLogado'
+          )
 
           setUsuarioLogado(null)
 
@@ -117,11 +151,16 @@ function App() {
     return (
 
       <GerenciarCursos
+
         onVoltar={() =>
           setPagina('dashboard')
         }
 
         onSair={() => {
+
+          localStorage.removeItem(
+            'usuarioLogado'
+          )
 
           setUsuarioLogado(null)
 
@@ -143,11 +182,16 @@ function App() {
     return (
 
       <Usuarios
+
         onVoltar={() =>
           setPagina('dashboard')
         }
 
         onSair={() => {
+
+          localStorage.removeItem(
+            'usuarioLogado'
+          )
 
           setUsuarioLogado(null)
 
@@ -169,6 +213,7 @@ function App() {
     return (
 
       <Login
+
         onVoltar={() =>
           setPagina('inicio')
         }
@@ -182,6 +227,11 @@ function App() {
           console.log(
             'Login realizado:',
             usuario
+          )
+
+          localStorage.setItem(
+            'usuarioLogado',
+            JSON.stringify(usuario)
           )
 
           setUsuarioLogado(usuario)
@@ -266,7 +316,7 @@ function App() {
 
                 const resposta =
                   await fetch(
-                    `${API_URL}/usuarios/login`,
+                    `${API_URL}/usuarios`,
                     {
                       method: 'POST',
 
@@ -869,6 +919,7 @@ function App() {
         </span>
 
       </footer>
+
 
     </main>
 
