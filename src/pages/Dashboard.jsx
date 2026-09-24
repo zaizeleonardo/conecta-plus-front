@@ -169,7 +169,7 @@ function Dashboard({
       setSalvandoCompetencia(true)
 
       const resposta = await fetch(
-        `${API_URL}/usuarios/${usuario.id}/competencias/${competenciaSelecionada.id}`,
+        `${API_URL}/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
         {
           method: 'POST'
         }
