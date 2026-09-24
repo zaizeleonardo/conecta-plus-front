@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Vagas.css'
-
+import API_URL from '../config/api'
 function Vagas({ usuario, onVoltar, onSair }) {
 
   const [vagas, setVagas] = useState([])
@@ -16,8 +16,7 @@ function Vagas({ usuario, onVoltar, onSair }) {
       setCarregando(true)
 
       // Carrega as vagas
-      const respostaVagas = await fetch(
-        'http://localhost:8080/vagas'
+      const respostaVagas = await fetch(`${API_URL}/vagas`,
       )
 
       if (respostaVagas.ok) {
@@ -30,8 +29,9 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
       // Carrega as candidaturas do usuário
       const respostaCandidaturas = await fetch(
-        `http://localhost:8080/candidaturas/usuario/${usuario.id}`
+        `${API_URL}/candidaturas/usuario/${usuario.id}`
       )
+
 
       if (respostaCandidaturas.ok) {
 
@@ -68,7 +68,7 @@ function Vagas({ usuario, onVoltar, onSair }) {
     try {
 
       const resposta = await fetch(
-        `http://localhost:8080/diagnosticos/usuarios/${usuario.id}/vagas/${vagaId}`
+        `${API_URL}/diagnosticos/usuarios/${usuario.id}/vagas/${vagaId}`
       )
 
       if (!resposta.ok) {
@@ -122,12 +122,11 @@ function Vagas({ usuario, onVoltar, onSair }) {
       setCarregandoCandidatura(vagaId)
 
       const resposta = await fetch(
-        `http://localhost:8080/candidaturas?usuarioId=${usuario.id}&vagaId=${vagaId}`,
+        `${API_URL}/candidaturas?usuarioId=${usuario.id}&vagaId=${vagaId}`,
         {
           method: 'POST'
         }
       )
-
       if (resposta.status === 409) {
 
         alert(

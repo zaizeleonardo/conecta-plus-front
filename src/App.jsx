@@ -6,7 +6,7 @@ import Vagas from './pages/Vagas'
 import Usuarios from './pages/Usuarios'
 import GerenciarVagas from './pages/GerenciarVagas'
 import GerenciarCursos from './pages/GerenciarCursos.jsx'
-
+import API_URL from './config/api'
 function App() {
 
   const [pagina, setPagina] = useState('inicio')
@@ -266,7 +266,7 @@ function App() {
 
                 const resposta =
                   await fetch(
-                    'http://localhost:8080/usuarios',
+                    `${API_URL}/usuarios/login`,
                     {
                       method: 'POST',
 

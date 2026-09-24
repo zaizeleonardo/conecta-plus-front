@@ -1,4 +1,5 @@
 import './Login.css'
+import API_URL from '../config/api'
 
 function Login({ onVoltar, onCadastro, onLoginSucesso }) {
 
@@ -15,7 +16,7 @@ function Login({ onVoltar, onCadastro, onLoginSucesso }) {
     try {
 
       const resposta = await fetch(
-        'http://localhost:8080/usuarios/login',
+        `${API_URL}/usuarios/login`,
         {
           method: 'POST',
 
