@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
+
 import VagaForm from '../components/VagaForm'
+
 import VagaCard from '../components/VagaCard'
-import API_URL from '../config/api'
+
+import { fetchAPI } from '../config/api'
+
 import './Vagas.css'
 
 function GerenciarVagas({ onVoltar, onSair }) {
 
     const [vagas, setVagas] = useState([])
+
     const [vagaEditando, setVagaEditando] = useState(null)
+
     const [carregando, setCarregando] = useState(true)
 
     async function carregarVagas() {
@@ -16,10 +22,12 @@ function GerenciarVagas({ onVoltar, onSair }) {
 
             setCarregando(true)
 
-            const resposta = await fetch(`${API_URL}/vagas`)
+            const resposta = await fetchAPI('/vagas')
 
             if (!resposta.ok) {
+
                 alert('Não foi possível carregar as vagas.')
+
                 return
             }
 
@@ -40,10 +48,13 @@ function GerenciarVagas({ onVoltar, onSair }) {
             setCarregando(false)
 
         }
+
     }
 
     useEffect(() => {
+
         carregarVagas()
+
     }, [])
 
     function iniciarEdicao(vaga) {
@@ -54,10 +65,13 @@ function GerenciarVagas({ onVoltar, onSair }) {
             top: 0,
             behavior: 'smooth'
         })
+
     }
 
     function cancelarEdicao() {
+
         setVagaEditando(null)
+
     }
 
     async function excluirVaga(vaga) {
@@ -67,13 +81,14 @@ function GerenciarVagas({ onVoltar, onSair }) {
         )
 
         if (!confirmar) {
+
             return
         }
 
         try {
 
-            const resposta = await fetch(
-                `${API_URL}/vagas/${vaga.id}`,
+            const resposta = await fetchAPI(
+                `/vagas/${vaga.id}`,
                 {
                     method: 'DELETE'
                 }
@@ -89,7 +104,9 @@ function GerenciarVagas({ onVoltar, onSair }) {
             alert('Vaga excluída com sucesso!')
 
             if (vagaEditando?.id === vaga.id) {
+
                 setVagaEditando(null)
+
             }
 
             await carregarVagas()
@@ -103,6 +120,7 @@ function GerenciarVagas({ onVoltar, onSair }) {
             )
 
         }
+
     }
 
     async function aposSalvar() {
@@ -114,6 +132,7 @@ function GerenciarVagas({ onVoltar, onSair }) {
     }
 
     return (
+
         <div className="vagas-page">
 
             {/* NAVBAR */}
@@ -121,7 +140,9 @@ function GerenciarVagas({ onVoltar, onSair }) {
             <header className="vagas-navbar">
 
                 <div className="vagas-logo">
+
                     Conecta<span>+</span>
+
                 </div>
 
                 <div className="vagas-navbar-actions">
@@ -130,14 +151,18 @@ function GerenciarVagas({ onVoltar, onSair }) {
                         onClick={onVoltar}
                         className="vagas-back-button"
                     >
+
                         ← Dashboard
+
                     </button>
 
                     <button
                         onClick={onSair}
                         className="vagas-logout-button"
                     >
+
                         Sair
+
                     </button>
 
                 </div>
@@ -153,16 +178,22 @@ function GerenciarVagas({ onVoltar, onSair }) {
                     <div>
 
                         <span className="vagas-label">
+
                             ADMINISTRAÇÃO
+
                         </span>
 
                         <h1>
+
                             Gerenciar vagas
+
                         </h1>
 
                         <p>
+
                             Cadastre, edite e remova oportunidades
                             disponíveis no Conecta+.
+
                         </p>
 
                     </div>
@@ -186,17 +217,23 @@ function GerenciarVagas({ onVoltar, onSair }) {
                         <div>
 
                             <span className="vagas-label">
+
                                 VAGAS CADASTRADAS
+
                             </span>
 
                             <h2>
+
                                 Oportunidades
+
                             </h2>
 
                         </div>
 
                         <span>
+
                             {vagas.length} vaga(s)
+
                         </span>
 
                     </div>
@@ -204,7 +241,9 @@ function GerenciarVagas({ onVoltar, onSair }) {
                     {carregando ? (
 
                         <div className="vagas-loading">
+
                             Carregando vagas...
+
                         </div>
 
                     ) : vagas.length === 0 ? (
@@ -212,12 +251,16 @@ function GerenciarVagas({ onVoltar, onSair }) {
                         <div className="vaga-empty">
 
                             <h3>
+
                                 Nenhuma vaga cadastrada
+
                             </h3>
 
                             <p>
+
                                 Cadastre a primeira oportunidade
                                 utilizando o formulário acima.
+
                             </p>
 
                         </div>
@@ -247,7 +290,9 @@ function GerenciarVagas({ onVoltar, onSair }) {
             </main>
 
         </div>
+
     )
+
 }
 
 export default GerenciarVagas

@@ -1,9 +1,11 @@
 import './Login.css'
+
 import API_URL from '../config/api'
 
 function Login({ onVoltar, onCadastro, onLoginSucesso }) {
 
   async function handleLogin(event) {
+
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
@@ -19,36 +21,47 @@ function Login({ onVoltar, onCadastro, onLoginSucesso }) {
         `${API_URL}/usuarios/login`,
         {
           method: 'POST',
-
           headers: {
             'Content-Type': 'application/json'
           },
-
           body: JSON.stringify(login)
         }
       )
 
       if (resposta.status === 401) {
-
         alert('E-mail ou senha inválidos.')
-
         return
       }
 
       if (!resposta.ok) {
-
         alert('Não foi possível realizar o login.')
-
         return
       }
 
-      const usuario = await resposta.json()
+      // Resposta do backend:
+      // {
+      //   usuario: {...},
+      //   token: "..."
+      // }
+      const respostaLogin = await resposta.json()
 
-      console.log('Usuário autenticado:', usuario)
+      console.log(
+        'Usuário autenticado:',
+        respostaLogin.usuario
+      )
 
-      alert(`Bem-vindo, ${usuario.nome}!`)
+      // Salva o JWT no navegador
+      localStorage.setItem(
+        'token',
+        respostaLogin.token
+      )
 
-      onLoginSucesso(usuario)
+      alert(
+        `Bem-vindo, ${respostaLogin.usuario.nome}!`
+      )
+
+      // Envia somente os dados do usuário para o restante da aplicação
+      onLoginSucesso(respostaLogin.usuario)
 
     } catch (erro) {
 
@@ -61,6 +74,7 @@ function Login({ onVoltar, onCadastro, onLoginSucesso }) {
   }
 
   return (
+
     <div className="login-page">
 
       <div className="login-container">
@@ -71,7 +85,9 @@ function Login({ onVoltar, onCadastro, onLoginSucesso }) {
             CONECTA<span>+</span>
           </div>
 
-          <h1>Bem-vindo de volta!</h1>
+          <h1>
+            Bem-vindo de volta!
+          </h1>
 
           <p>
             Entre na sua conta para acompanhar sua evolução profissional.
@@ -119,13 +135,20 @@ function Login({ onVoltar, onCadastro, onLoginSucesso }) {
           <div className="login-options">
 
             <label>
-              <input type="checkbox" />
+
+              <input
+                type="checkbox"
+              />
+
               Lembrar de mim
+
             </label>
 
             <a
               href="#"
-              onClick={(event) => event.preventDefault()}
+              onClick={(event) =>
+                event.preventDefault()
+              }
             >
               Esqueci minha senha
             </a>

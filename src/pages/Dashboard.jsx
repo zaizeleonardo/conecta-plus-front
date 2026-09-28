@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Dashboard.css'
-import API_URL from '../config/api'
+import { fetchAPI } from '../config/api'
 
 function Dashboard({
   usuario,
@@ -40,9 +40,10 @@ function Dashboard({
       // CARREGAR COMPETÊNCIAS DO USUÁRIO
       // ==============================
 
-      const respostaCompetencias = await fetch(
-        `${API_URL}/usuarios/${usuario.id}/competencias`
+      const respostaCompetencias = await fetchAPI(
+        `/usuarios/${usuario.id}/competencias`
       )
+
       if (respostaCompetencias.ok) {
 
         const dadosCompetencias =
@@ -57,8 +58,8 @@ function Dashboard({
       // CARREGAR TODAS AS COMPETÊNCIAS
       // ==============================
 
-      const respostaTodasCompetencias = await fetch(
-        `${API_URL}/competencias`
+      const respostaTodasCompetencias = await fetchAPI(
+        '/competencias'
       )
 
       if (respostaTodasCompetencias.ok) {
@@ -75,9 +76,8 @@ function Dashboard({
       // CARREGAR VAGAS
       // ==============================
 
-      const respostaVagas = await fetch(
-        `${API_URL}/vagas`
-      )
+      const respostaVagas = await fetchAPI('/vagas')
+
       if (respostaVagas.ok) {
 
         const dadosVagas =
@@ -92,8 +92,8 @@ function Dashboard({
       // CARREGAR CANDIDATURAS
       // ==============================
 
-      const respostaCandidaturas = await fetch(
-        `${API_URL}/candidaturas/usuario/${usuario.id}`
+      const respostaCandidaturas = await fetchAPI(
+        `/candidaturas/usuario/${usuario.id}`
       )
 
       if (respostaCandidaturas.ok) {
@@ -110,8 +110,8 @@ function Dashboard({
       // CARREGAR DIAGNÓSTICO
       // ==============================
 
-      const respostaDiagnostico = await fetch(
-        `${API_URL}/diagnosticos/usuarios/${usuario.id}/vagas/1`
+      const respostaDiagnostico = await fetchAPI(
+        `/diagnosticos/usuarios/${usuario.id}/vagas/1`
       )
 
       if (respostaDiagnostico.ok) {
@@ -168,8 +168,8 @@ function Dashboard({
 
       setSalvandoCompetencia(true)
 
-      const resposta = await fetch(
-        `${API_URL}/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
+      const resposta = await fetchAPI(
+        `/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
         {
           method: 'POST'
         }
@@ -243,12 +243,13 @@ function Dashboard({
 
     try {
 
-      const resposta = await fetch(
-        `${API_URL}/usuarios/${usuario.id}/competencias/${competenciaId}`,
+      const resposta = await fetchAPI(
+        `/usuarios/${usuario.id}/competencias/${competenciaId}`,
         {
           method: 'DELETE'
         }
       )
+
       if (!resposta.ok) {
 
         alert(
@@ -382,28 +383,34 @@ function Dashboard({
           </button>
 
 
-          <button
-            className="dashboard-vagas-button"
-            onClick={onUsuarios}
-          >
-            Gerenciar usuários
-          </button>
+          {usuario.perfil === 'ADMIN' && (
+            <button
+              className="dashboard-vagas-button"
+              onClick={onUsuarios}
+            >
+              Gerenciar usuários
+            </button>
+          )}
 
 
-          <button
-            className="dashboard-vagas-button"
-            onClick={onGerenciarVagas}
-          >
-            Gerenciar vagas
-          </button>
+          {usuario.perfil === 'ADMIN' && (
+            <button
+              className="dashboard-vagas-button"
+              onClick={onGerenciarVagas}
+            >
+              Gerenciar vagas
+            </button>
+          )}
 
 
-          <button
-            className="dashboard-vagas-button"
-            onClick={onGerenciarCursos}
-          >
-            Gerenciar cursos
-          </button>
+          {usuario.perfil === 'ADMIN' && (
+            <button
+              className="dashboard-vagas-button"
+              onClick={onGerenciarCursos}
+            >
+              Gerenciar cursos
+            </button>
+          )}
 
 
           <button

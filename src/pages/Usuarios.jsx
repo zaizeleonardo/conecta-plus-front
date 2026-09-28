@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import API_URL from '../config/api'
+import API_URL, { fetchAPI } from '../config/api'
 
 function Usuarios({ onVoltar, onSair }) {
 
@@ -126,13 +126,10 @@ function Usuarios({ onVoltar, onSair }) {
             formulario.objetivoProfissional
         }
 
-        resposta = await fetch(
-          `${API_URL}/usuarios/${usuarioEditando.id}`,
+        resposta = await fetchAPI(
+          `/usuarios/${usuarioEditando.id}`,
           {
             method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
             body: JSON.stringify(usuarioAtualizado)
           }
         )
@@ -262,8 +259,8 @@ function Usuarios({ onVoltar, onSair }) {
 
     try {
 
-      const resposta = await fetch(
-        `${API_URL}/usuarios/${usuario.id}`,
+      const resposta = await fetchAPI(
+        `/usuarios/${usuario.id}`,
         {
           method: 'DELETE'
         }
@@ -359,8 +356,8 @@ function Usuarios({ onVoltar, onSair }) {
             onClick={onSair}
             style={{
               padding: '10px 18px',
-              borderRadius: '8px',
               border: 'none',
+              borderRadius: '8px',
               background: '#dc2626',
               color: '#ffffff',
               cursor: 'pointer'
@@ -372,7 +369,6 @@ function Usuarios({ onVoltar, onSair }) {
         </div>
 
       </header>
-
 
       {/* =====================================
           CONTEÚDO
@@ -422,7 +418,6 @@ function Usuarios({ onVoltar, onSair }) {
           </p>
 
         </div>
-
 
         {/* ===================================
             FORMULÁRIO
@@ -478,7 +473,6 @@ function Usuarios({ onVoltar, onSair }) {
 
               </div>
 
-
               {/* E-MAIL */}
 
               <div>
@@ -496,7 +490,6 @@ function Usuarios({ onVoltar, onSair }) {
                 />
 
               </div>
-
 
               {/* SENHA */}
 
@@ -521,7 +514,6 @@ function Usuarios({ onVoltar, onSair }) {
 
               )}
 
-
               {/* TELEFONE */}
 
               <div>
@@ -540,7 +532,6 @@ function Usuarios({ onVoltar, onSair }) {
 
               </div>
 
-
               {/* CIDADE */}
 
               <div>
@@ -558,7 +549,6 @@ function Usuarios({ onVoltar, onSair }) {
                 />
 
               </div>
-
 
               {/* OBJETIVO */}
 
@@ -579,7 +569,6 @@ function Usuarios({ onVoltar, onSair }) {
               </div>
 
             </div>
-
 
             {/* BOTÕES */}
 
@@ -608,7 +597,6 @@ function Usuarios({ onVoltar, onSair }) {
                   : 'Criar usuário'}
               </button>
 
-
               {modoEdicao && (
 
                 <button
@@ -632,7 +620,6 @@ function Usuarios({ onVoltar, onSair }) {
           </form>
 
         </section>
-
 
         {/* ===================================
             LISTA
@@ -674,7 +661,6 @@ function Usuarios({ onVoltar, onSair }) {
             </span>
 
           </div>
-
 
           {carregando ? (
 
@@ -826,7 +812,6 @@ function Usuarios({ onVoltar, onSair }) {
 
   )
 }
-
 
 // ==========================================
 // ESTILOS

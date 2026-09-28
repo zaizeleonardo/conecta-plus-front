@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Vagas.css'
-import API_URL from '../config/api'
+import { fetchAPI } from '../config/api'
+
 function Vagas({ usuario, onVoltar, onSair }) {
 
   const [vagas, setVagas] = useState([])
@@ -9,6 +10,7 @@ function Vagas({ usuario, onVoltar, onSair }) {
   const [carregando, setCarregando] = useState(true)
   const [carregandoCandidatura, setCarregandoCandidatura] = useState(null)
 
+
   async function carregarDados() {
 
     try {
@@ -16,8 +18,7 @@ function Vagas({ usuario, onVoltar, onSair }) {
       setCarregando(true)
 
       // Carrega as vagas
-      const respostaVagas = await fetch(`${API_URL}/vagas`,
-      )
+      const respostaVagas = await fetchAPI('/vagas')
 
       if (respostaVagas.ok) {
 
@@ -27,11 +28,11 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
       }
 
-      // Carrega as candidaturas do usuário
-      const respostaCandidaturas = await fetch(
-        `${API_URL}/candidaturas/usuario/${usuario.id}`
-      )
 
+      // Carrega as candidaturas do usuário
+      const respostaCandidaturas = await fetchAPI(
+        `/candidaturas/usuario/${usuario.id}`
+      )
 
       if (respostaCandidaturas.ok) {
 
@@ -56,6 +57,7 @@ function Vagas({ usuario, onVoltar, onSair }) {
     }
   }
 
+
   useEffect(() => {
 
     carregarDados()
@@ -67,8 +69,8 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
     try {
 
-      const resposta = await fetch(
-        `${API_URL}/diagnosticos/usuarios/${usuario.id}/vagas/${vagaId}`
+      const resposta = await fetchAPI(
+        `/diagnosticos/usuarios/${usuario.id}/vagas/${vagaId}`
       )
 
       if (!resposta.ok) {
@@ -121,12 +123,13 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
       setCarregandoCandidatura(vagaId)
 
-      const resposta = await fetch(
-        `${API_URL}/candidaturas?usuarioId=${usuario.id}&vagaId=${vagaId}`,
+      const resposta = await fetchAPI(
+        `/candidaturas?usuarioId=${usuario.id}&vagaId=${vagaId}`,
         {
           method: 'POST'
         }
       )
+
       if (resposta.status === 409) {
 
         alert(
