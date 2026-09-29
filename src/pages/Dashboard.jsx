@@ -25,6 +25,11 @@ function Dashboard({
   const [competenciaSelecionada, setCompetenciaSelecionada] = useState('')
   const [salvandoCompetencia, setSalvandoCompetencia] = useState(false)
 
+  // ==============================
+  // IDENTIFICAR PERFIL
+  // ==============================
+
+  const isEmpresa = usuario?.perfil === 'EMPRESA'
 
   // ==============================
   // CARREGAR DADOS
@@ -76,7 +81,8 @@ function Dashboard({
       // CARREGAR VAGAS
       // ==============================
 
-      const respostaVagas = await fetchAPI('/vagas')
+      const respostaVagas =
+        await fetchAPI('/vagas')
 
       if (respostaVagas.ok) {
 
@@ -92,9 +98,10 @@ function Dashboard({
       // CARREGAR CANDIDATURAS
       // ==============================
 
-      const respostaCandidaturas = await fetchAPI(
-        `/candidaturas/usuario/${usuario.id}`
-      )
+      const respostaCandidaturas =
+        await fetchAPI(
+          `/candidaturas/usuario/${usuario.id}`
+        )
 
       if (respostaCandidaturas.ok) {
 
@@ -110,9 +117,10 @@ function Dashboard({
       // CARREGAR DIAGNÓSTICO
       // ==============================
 
-      const respostaDiagnostico = await fetchAPI(
-        `/diagnosticos/usuarios/${usuario.id}/vagas/1`
-      )
+      const respostaDiagnostico =
+        await fetchAPI(
+          `/diagnosticos/usuarios/${usuario.id}/vagas/1`
+        )
 
       if (respostaDiagnostico.ok) {
 
@@ -145,9 +153,20 @@ function Dashboard({
 
   useEffect(() => {
 
+    // Empresa não precisa carregar
+    // competências, candidaturas ou diagnóstico.
+
+    if (isEmpresa) {
+
+      setCarregando(false)
+
+      return
+
+    }
+
     carregarDados()
 
-  }, [usuario.id])
+  }, [usuario.id, isEmpresa])
 
 
   // ==============================
@@ -158,7 +177,9 @@ function Dashboard({
 
     if (!competenciaSelecionada) {
 
-      alert('Selecione uma competência.')
+      alert(
+        'Selecione uma competência.'
+      )
 
       return
 
@@ -168,12 +189,13 @@ function Dashboard({
 
       setSalvandoCompetencia(true)
 
-      const resposta = await fetchAPI(
-        `/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
-        {
-          method: 'POST'
-        }
-      )
+      const resposta =
+        await fetchAPI(
+          `/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
+          {
+            method: 'POST'
+          }
+        )
 
       if (!resposta.ok) {
 
@@ -222,7 +244,9 @@ function Dashboard({
   // REMOVER COMPETÊNCIA
   // ==============================
 
-  async function removerCompetencia(competenciaId) {
+  async function removerCompetencia(
+    competenciaId
+  ) {
 
     const competencia =
       competencias.find(
@@ -243,12 +267,13 @@ function Dashboard({
 
     try {
 
-      const resposta = await fetchAPI(
-        `/usuarios/${usuario.id}/competencias/${competenciaId}`,
-        {
-          method: 'DELETE'
-        }
-      )
+      const resposta =
+        await fetchAPI(
+          `/usuarios/${usuario.id}/competencias/${competenciaId}`,
+          {
+            method: 'DELETE'
+          }
+        )
 
       if (!resposta.ok) {
 
@@ -337,6 +362,274 @@ function Dashboard({
   }
 
 
+  // ==================================================
+  // DASHBOARD DA EMPRESA
+  // ==================================================
+
+  if (isEmpresa) {
+
+    return (
+
+      <div className="dashboard-page">
+
+        {/* ==========================
+            NAVBAR
+        =========================== */}
+
+        <header className="dashboard-navbar">
+
+          <div className="dashboard-logo">
+
+            Conecta<span>+</span>
+
+          </div>
+
+
+          <div className="dashboard-navbar-actions">
+
+            <button
+              className="dashboard-vagas-button"
+              onClick={onVagas}
+            >
+              Ver vagas
+            </button>
+
+
+            <button
+              className="dashboard-vagas-button"
+              onClick={onGerenciarVagas}
+            >
+              Gerenciar minhas vagas
+            </button>
+
+
+            <button
+              className="dashboard-sair-button"
+              onClick={onSair}
+            >
+              Sair
+            </button>
+
+          </div>
+
+        </header>
+
+
+        {/* ==========================
+            CONTEÚDO
+        =========================== */}
+
+        <main className="dashboard-container">
+
+
+          {/* ==========================
+              CABEÇALHO
+          =========================== */}
+
+          <section className="dashboard-welcome">
+
+            <span className="dashboard-label">
+              ÁREA DA EMPRESA
+            </span>
+
+
+            <h1>
+              Olá, {usuario.nome}! 👋
+            </h1>
+
+
+            <p>
+              Gerencie suas oportunidades e encontre
+              profissionais compatíveis com suas vagas.
+            </p>
+
+          </section>
+
+
+          {/* ==========================
+              INFORMAÇÕES DA EMPRESA
+          =========================== */}
+
+          <section className="dashboard-profile-card">
+
+            <div>
+
+              <span className="dashboard-profile-label">
+                EMPRESA
+              </span>
+
+
+              <h2>
+                {usuario.nome}
+              </h2>
+
+            </div>
+
+
+            <div className="dashboard-profile-info">
+
+              <div>
+
+                <span>
+                  E-mail
+                </span>
+
+                <strong>
+                  {usuario.email}
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Cidade
+                </span>
+
+                <strong>
+                  {usuario.cidade || '-'}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          {/* ==========================
+              GESTÃO DE VAGAS
+          =========================== */}
+
+          <section className="dashboard-section">
+
+            <div className="dashboard-section-header">
+
+              <div>
+
+                <span className="dashboard-label">
+                  OPORTUNIDADES
+                </span>
+
+
+                <h2>
+                  Gestão de vagas
+                </h2>
+
+
+                <p>
+                  Cadastre, visualize, edite e exclua
+                  as oportunidades da sua empresa.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div className="dashboard-cta">
+
+              <div>
+
+                <span>
+                  MINHAS VAGAS
+                </span>
+
+
+                <h2>
+                  Gerencie suas oportunidades
+                </h2>
+
+
+                <p>
+                  Acesse o painel para cadastrar novas
+                  vagas e administrar as oportunidades existentes.
+                </p>
+
+              </div>
+
+
+              <button
+                onClick={onGerenciarVagas}
+              >
+                Gerenciar vagas →
+              </button>
+
+            </div>
+
+          </section>
+
+
+          {/* ==========================
+              CANDIDATOS
+          =========================== */}
+
+          <section className="dashboard-section">
+
+            <div className="dashboard-section-header">
+
+              <div>
+
+                <span className="dashboard-label">
+                  TALENTOS
+                </span>
+
+
+                <h2>
+                  Encontre profissionais
+                </h2>
+
+
+                <p>
+                  Publique suas vagas para conectar sua
+                  empresa a profissionais em busca de oportunidades.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div className="candidaturas-empty">
+
+              <div className="candidaturas-empty-icon">
+                👥
+              </div>
+
+
+              <h3>
+                Publique uma vaga e encontre candidatos
+              </h3>
+
+
+              <p>
+                Crie oportunidades alinhadas às competências
+                que sua empresa procura.
+              </p>
+
+
+              <button
+                className="candidaturas-vagas-button"
+                onClick={onGerenciarVagas}
+              >
+                Criar vaga
+              </button>
+
+            </div>
+
+          </section>
+
+
+        </main>
+
+      </div>
+
+    )
+
+  }
+
+
   // ==============================
   // COMPETÊNCIAS DISPONÍVEIS
   // ==============================
@@ -351,9 +644,9 @@ function Dashboard({
     )
 
 
-  // ==============================
-  // TELA
-  // ==============================
+  // ==================================================
+  // DASHBOARD DO CANDIDATO
+  // ==================================================
 
   return (
 
@@ -384,32 +677,38 @@ function Dashboard({
 
 
           {usuario.perfil === 'ADMIN' && (
+
             <button
               className="dashboard-vagas-button"
               onClick={onUsuarios}
             >
               Gerenciar usuários
             </button>
+
           )}
 
 
           {usuario.perfil === 'ADMIN' && (
+
             <button
               className="dashboard-vagas-button"
               onClick={onGerenciarVagas}
             >
               Gerenciar vagas
             </button>
+
           )}
 
 
           {usuario.perfil === 'ADMIN' && (
+
             <button
               className="dashboard-vagas-button"
               onClick={onGerenciarCursos}
             >
               Gerenciar cursos
             </button>
+
           )}
 
 

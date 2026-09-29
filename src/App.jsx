@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Vagas from './pages/Vagas'
 import Usuarios from './pages/Usuarios'
 import GerenciarVagas from './pages/GerenciarVagas'
 import GerenciarCursos from './pages/GerenciarCursos.jsx'
+
 import API_URL from './config/api'
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
   const [pagina, setPagina] = useState('inicio')
 
   const [usuarioLogado, setUsuarioLogado] = useState(null)
+
 
   // ==============================
   // RECUPERAR LOGIN SALVO
@@ -121,6 +124,8 @@ function App() {
 
       <GerenciarVagas
 
+        usuario={usuarioLogado}
+
         onVoltar={() =>
           setPagina('dashboard')
         }
@@ -136,6 +141,7 @@ function App() {
           setPagina('inicio')
 
         }}
+
       />
 
     )
@@ -167,6 +173,7 @@ function App() {
           setPagina('inicio')
 
         }}
+
       />
 
     )
@@ -198,6 +205,7 @@ function App() {
           setPagina('inicio')
 
         }}
+
       />
 
     )
@@ -239,6 +247,7 @@ function App() {
           setPagina('dashboard')
 
         }}
+
       />
 
     )
@@ -276,16 +285,23 @@ function App() {
 
 
           <form
+
             className="login-form"
 
             onSubmit={async (event) => {
 
               event.preventDefault()
 
+
               const formData =
                 new FormData(
                   event.currentTarget
                 )
+
+
+              const tipoCadastro =
+                formData.get('tipoCadastro')
+
 
               const usuario = {
 
@@ -307,7 +323,12 @@ function App() {
                 objetivoProfissional:
                   formData.get(
                     'objetivoProfissional'
-                  )
+                  ),
+
+                perfil:
+                  tipoCadastro === 'EMPRESA'
+                    ? 'EMPRESA'
+                    : 'USUARIO'
 
               }
 
@@ -327,7 +348,6 @@ function App() {
 
                       body:
                         JSON.stringify(usuario)
-
                     }
                   )
 
@@ -352,6 +372,7 @@ function App() {
                   'Cadastro realizado com sucesso!'
                 )
 
+
                 setPagina('login')
 
 
@@ -366,29 +387,104 @@ function App() {
               }
 
             }}
+
           >
 
 
+            {/* ============================== */}
+            {/* TIPO DE CADASTRO */}
+            {/* ============================== */}
+
+            <div className="form-group">
+
+              <label>
+                Como você deseja se cadastrar?
+              </label>
+
+
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '20px',
+                  marginTop: '10px',
+                  flexWrap: 'wrap'
+                }}
+              >
+
+
+                {/* CANDIDATO */}
+
+                <label
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    cursor: 'pointer'
+                  }}
+                >
+
+                  <input
+                    type="radio"
+                    name="tipoCadastro"
+                    value="USUARIO"
+                    defaultChecked
+                  />
+
+                  👤 Sou candidato
+
+                </label>
+
+
+                {/* EMPRESA */}
+
+                <label
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    cursor: 'pointer'
+                  }}
+                >
+
+                  <input
+                    type="radio"
+                    name="tipoCadastro"
+                    value="EMPRESA"
+                  />
+
+                  🏢 Sou empresa
+
+                </label>
+
+              </div>
+
+            </div>
+
+
+            {/* ============================== */}
             {/* NOME */}
+            {/* ============================== */}
 
             <div className="form-group">
 
               <label htmlFor="nome">
-                Nome
+                Nome / Empresa
               </label>
 
               <input
                 type="text"
                 id="nome"
                 name="nome"
-                placeholder="Digite seu nome"
+                placeholder="Digite seu nome ou nome da empresa"
                 required
               />
 
             </div>
 
 
+            {/* ============================== */}
             {/* E-MAIL */}
+            {/* ============================== */}
 
             <div className="form-group">
 
@@ -407,7 +503,9 @@ function App() {
             </div>
 
 
+            {/* ============================== */}
             {/* SENHA */}
+            {/* ============================== */}
 
             <div className="form-group">
 
@@ -427,7 +525,9 @@ function App() {
             </div>
 
 
+            {/* ============================== */}
             {/* TELEFONE */}
+            {/* ============================== */}
 
             <div className="form-group">
 
@@ -446,7 +546,9 @@ function App() {
             </div>
 
 
+            {/* ============================== */}
             {/* CIDADE */}
+            {/* ============================== */}
 
             <div className="form-group">
 
@@ -465,12 +567,14 @@ function App() {
             </div>
 
 
+            {/* ============================== */}
             {/* OBJETIVO PROFISSIONAL */}
+            {/* ============================== */}
 
             <div className="form-group">
 
               <label htmlFor="objetivoProfissional">
-                Objetivo profissional
+                Objetivo profissional / Área de atuação
               </label>
 
               <input
@@ -484,7 +588,9 @@ function App() {
             </div>
 
 
+            {/* ============================== */}
             {/* BOTÃO */}
+            {/* ============================== */}
 
             <button
               type="submit"
@@ -493,16 +599,20 @@ function App() {
               Criar conta
             </button>
 
+
           </form>
 
 
+          {/* ============================== */}
           {/* RODAPÉ */}
+          {/* ============================== */}
 
           <div className="login-footer">
 
             <p>
               Já possui uma conta?
             </p>
+
 
             <button
               className="register-link"
@@ -512,6 +622,7 @@ function App() {
             >
               Voltar para o Login
             </button>
+
 
             <button
               className="back-link"
@@ -523,6 +634,7 @@ function App() {
             </button>
 
           </div>
+
 
         </div>
 
@@ -541,7 +653,9 @@ function App() {
     <main className="app">
 
 
+      {/* ============================== */}
       {/* NAVBAR */}
+      {/* ============================== */}
 
       <header className="navbar">
 
@@ -578,6 +692,7 @@ function App() {
             Entrar
           </button>
 
+
           <button
             className="btn btn-primary"
             onClick={() =>
@@ -592,7 +707,9 @@ function App() {
       </header>
 
 
+      {/* ============================== */}
       {/* HERO */}
+      {/* ============================== */}
 
       <section
         id="inicio"
@@ -605,6 +722,7 @@ function App() {
             🚀 Conectando talentos a oportunidades
           </span>
 
+
           <h1>
 
             Descubra o seu
@@ -614,6 +732,7 @@ function App() {
             </span>
 
           </h1>
+
 
           <p>
 
@@ -752,7 +871,9 @@ function App() {
       </section>
 
 
+      {/* ============================== */}
       {/* COMO FUNCIONA */}
+      {/* ============================== */}
 
       <section
         id="como-funciona"
@@ -838,7 +959,9 @@ function App() {
       </section>
 
 
+      {/* ============================== */}
       {/* SOBRE */}
+      {/* ============================== */}
 
       <section
         id="sobre"
@@ -876,6 +999,7 @@ function App() {
             Impacto social
           </h3>
 
+
           <div className="ods">
 
             <span>
@@ -892,6 +1016,7 @@ function App() {
 
           </div>
 
+
           <p>
             Educação de qualidade, trabalho decente
             e redução das desigualdades.
@@ -902,7 +1027,9 @@ function App() {
       </section>
 
 
+      {/* ============================== */}
       {/* FOOTER */}
+      {/* ============================== */}
 
       <footer>
 
@@ -925,5 +1052,6 @@ function App() {
 
   )
 }
+
 
 export default App

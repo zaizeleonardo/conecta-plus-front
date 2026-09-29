@@ -650,3 +650,245 @@
     }
 
 }
+
+/* ================================
+   FORMULÁRIO DE VAGA
+================================ */
+
+.vaga-form-container {
+    background: #ffffff;
+    border: 1px solid #e3e9f1;
+    border-radius: 18px;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.06);
+}
+
+.vaga-form-header {
+    margin-bottom: 28px;
+}
+
+.vaga-form-header .vagas-label {
+    margin-bottom: 8px;
+}
+
+.vaga-form-header h2 {
+    margin: 0 0 8px;
+    color: #17365d;
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+.vaga-form-header p {
+    margin: 0;
+    color: #61738d;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* GRID DOS CAMPOS */
+
+.vaga-form {
+    width: 100%;
+}
+
+.vaga-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* CAMPO */
+
+.vaga-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vaga-form-field label {
+    color: #17365d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.vaga-form-field input,
+.vaga-form-field select,
+.vaga-form-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid #d6deea;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #17365d;
+
+    padding: 12px 14px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* PLACEHOLDER */
+
+.vaga-form-field input::placeholder,
+.vaga-form-field textarea::placeholder {
+    color: #9aa8b8;
+}
+
+
+/* FOCO */
+
+.vaga-form-field input:focus,
+.vaga-form-field select:focus,
+.vaga-form-field textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    background: #ffffff;
+}
+
+
+/* SELECT */
+
+.vaga-form-field select {
+    cursor: pointer;
+}
+
+
+/* DESCRIÇÃO */
+
+.vaga-form>.vaga-form-field {
+    margin-bottom: 24px;
+}
+
+.vaga-form-field textarea {
+    min-height: 130px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+
+/* AÇÕES */
+
+.vaga-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #edf0f4;
+}
+
+
+/* BOTÃO SALVAR */
+
+.vaga-form-save-button {
+    border: none;
+    border-radius: 9px;
+
+    padding: 12px 22px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.vaga-form-save-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
+}
+
+.vaga-form-save-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* BOTÃO CANCELAR */
+
+.vaga-form-cancel-button {
+    border: 1px solid #d6deea;
+    border-radius: 9px;
+
+    padding: 11px 20px;
+
+    background: #ffffff;
+    color: #52657e;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.vaga-form-cancel-button:hover {
+    background: #f5f7fa;
+    border-color: #c5cfdd;
+}
+
+.vaga-form-cancel-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* ================================
+   RESPONSIVIDADE DO FORMULÁRIO
+================================ */
+
+@media (max-width: 768px) {
+
+    .vaga-form-container {
+        padding: 22px;
+        border-radius: 14px;
+    }
+
+    .vaga-form-header h2 {
+        font-size: 21px;
+    }
+
+    .vaga-form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .vaga-form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .vaga-form-save-button,
+    .vaga-form-cancel-button {
+        width: 100%;
+    }
+}
