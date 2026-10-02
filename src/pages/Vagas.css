@@ -4,8 +4,17 @@
 
 .vagas-page {
     min-height: 100vh;
-    background: #f5f8fc;
-    color: #17365d;
+
+    background:
+        radial-gradient(circle at 8% 5%,
+            rgba(37, 99, 235, 0.08),
+            transparent 28%),
+        radial-gradient(circle at 92% 45%,
+            rgba(249, 115, 22, 0.06),
+            transparent 25%),
+        #f8fafc;
+
+    color: #172033;
 }
 
 
@@ -15,11 +24,14 @@
 
 .vagas-loading {
     min-height: 100vh;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     background: #f5f8fc;
     color: #17365d;
+
     font-size: 18px;
     font-weight: 600;
 }
@@ -31,31 +43,36 @@
 
 .vagas-navbar {
     height: 72px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5eaf1;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     padding: 0 6%;
+
+    background: #0b0f19;
+
+    border-bottom: 1px solid #1c2433;
+
     box-sizing: border-box;
 }
 
 .vagas-logo {
     font-size: 24px;
     font-weight: 800;
-    color: #17365d;
+
+    color: #ffffff;
 }
 
 .vagas-logo span {
-    color: #ff7a00;
+    color: #f97316;
 }
 
 .vagas-navbar-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+
+    gap: 10px;
 }
 
 
@@ -65,34 +82,46 @@
 
 .vagas-back-button,
 .vagas-logout-button {
-    border: none;
     border-radius: 8px;
-    padding: 10px 18px;
 
-    font-size: 14px;
-    font-weight: 600;
+    padding: 9px 16px;
+
+    font-size: 13px;
+    font-weight: 700;
 
     cursor: pointer;
-    transition: 0.2s ease;
+
+    transition: all 0.2s ease;
 }
 
 .vagas-back-button {
-    background: #ffffff;
-    color: #17365d;
-    border: 1px solid #d6deea;
+    background: transparent;
+
+    color: #ffffff;
+
+    border: 1px solid #334155;
 }
 
 .vagas-back-button:hover {
-    background: #f1f5fa;
+    background: #1e293b;
+
+    border-color: #2563eb;
 }
 
 .vagas-logout-button {
-    background: #17365d;
+    background: #2563eb;
+
     color: #ffffff;
+
+    border: 1px solid #2563eb;
 }
 
 .vagas-logout-button:hover {
-    background: #0f2948;
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+
+    transform: translateY(-1px);
 }
 
 
@@ -102,7 +131,9 @@
 
 .vagas-container {
     width: min(1120px, 92%);
+
     margin: 0 auto;
+
     padding: 55px 0 80px;
 }
 
@@ -121,6 +152,7 @@
     margin-bottom: 10px;
 
     color: #2563eb;
+
     font-size: 12px;
     font-weight: 800;
 
@@ -140,6 +172,7 @@
     margin: 0;
 
     color: #61738d;
+
     font-size: 16px;
     line-height: 1.6;
 }
@@ -151,7 +184,9 @@
 
 .vagas-list {
     display: flex;
+
     flex-direction: column;
+
     gap: 22px;
 }
 
@@ -161,21 +196,50 @@
 ================================ */
 
 .vaga-card {
+    position: relative;
+
     background: #ffffff;
 
-    border: 1px solid #e3e9f1;
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
 
-    padding: 28px;
+    padding: 26px 26px 24px;
 
-    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.06);
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
 
-    transition: 0.2s ease;
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* IDENTIDADE DA VAGA */
+
+.vaga-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: linear-gradient(180deg,
+            #2563eb,
+            #3b82f6);
 }
 
 .vaga-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(23, 54, 93, 0.09);
+
+    border-color: #cbd5e1;
+
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
 
@@ -185,6 +249,7 @@
 
 .vaga-card-top {
     display: flex;
+
     align-items: flex-start;
     justify-content: space-between;
 
@@ -198,16 +263,20 @@
 
     color: #2563eb;
 
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
 }
 
 .vaga-card h2 {
     margin: 0;
 
-    color: #17365d;
+    color: #172033;
 
-    font-size: 23px;
+    font-size: 22px;
+    font-weight: 750;
+
     line-height: 1.3;
 }
 
@@ -253,21 +322,34 @@
 
 .vaga-info {
     display: flex;
+
     flex-wrap: wrap;
-    gap: 18px;
+
+    gap: 10px;
 
     margin-bottom: 22px;
 
-    color: #52657e;
+    color: #475569;
 
-    font-size: 13px;
+    font-size: 12px;
+
     font-weight: 600;
 }
 
 .vaga-info span {
     display: inline-flex;
+
     align-items: center;
+
     gap: 5px;
+
+    padding: 6px 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 8px;
 }
 
 
@@ -277,8 +359,11 @@
 
 .vaga-actions {
     display: flex;
+
     align-items: center;
+
     flex-wrap: wrap;
+
     gap: 12px;
 
     padding-top: 18px;
@@ -294,23 +379,30 @@
 .vaga-compatibilidade-button {
     border: 1px solid #2563eb;
 
-    background: #ffffff;
-    color: #2563eb;
+    background: #2563eb;
+    color: #ffffff;
 
     border-radius: 8px;
 
     padding: 11px 18px;
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .vaga-compatibilidade-button:hover {
-    background: #eff6ff;
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
 }
 
 
@@ -321,34 +413,51 @@
 .vaga-candidatura-button {
     border: none;
 
-    background: #ff7a00;
+    background: #f97316;
     color: #ffffff;
 
     border-radius: 8px;
 
     padding: 11px 20px;
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .vaga-candidatura-button:hover {
-    background: #e86e00;
+    background: #ea580c;
+
     transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(249, 115, 22, 0.20);
 }
 
 .vaga-candidatura-button:disabled {
     cursor: not-allowed;
+
     transform: none;
+
+    box-shadow: none;
 }
 
+
+/* ================================
+   CANDIDATURA JÁ ENVIADA
+================================ */
+
 .vaga-candidatura-button.inscrito {
-    background: #168344;
+    background: #16a34a;
+
     color: #ffffff;
+
+    box-shadow: none;
 }
 
 
@@ -357,14 +466,19 @@
 ================================ */
 
 .diagnostico-box {
+    position: relative;
+
     margin-top: 25px;
 
-    padding: 25px;
+    padding: 28px;
 
     background: #f8fafc;
 
-    border: 1px solid #e1e8f0;
-    border-radius: 14px;
+    border: 1px solid #dbe3ef;
+
+    border-radius: 16px;
+
+    overflow: hidden;
 }
 
 
@@ -374,6 +488,7 @@
 
 .diagnostico-header {
     display: flex;
+
     justify-content: space-between;
     align-items: flex-start;
 
@@ -381,6 +496,8 @@
 }
 
 .diagnostico-header span {
+    display: block;
+
     color: #2563eb;
 
     font-size: 11px;
@@ -392,29 +509,45 @@
 .diagnostico-header h3 {
     margin: 5px 0 0;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 19px;
+    font-weight: 750;
 }
 
 .diagnostico-close {
     width: 32px;
     height: 32px;
 
-    border: 1px solid #d8e0ea;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #dbe3ef;
+
     border-radius: 50%;
 
     background: #ffffff;
-    color: #61738d;
+    color: #64748b;
 
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1;
 
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .diagnostico-close:hover {
-    background: #f1f4f8;
+    background: #f1f5f9;
+
+    border-color: #cbd5e1;
+
+    color: #172033;
 }
 
 
@@ -424,22 +557,28 @@
 
 .diagnostico-score {
     display: flex;
+
     align-items: baseline;
+
     gap: 10px;
 
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .diagnostico-score strong {
-    color: #17365d;
+    color: #2563eb;
 
-    font-size: 34px;
+    font-size: 42px;
+    font-weight: 800;
+
+    letter-spacing: -1px;
 }
 
 .diagnostico-score span {
-    color: #61738d;
+    color: #64748b;
 
     font-size: 14px;
+    font-weight: 500;
 }
 
 
@@ -449,23 +588,25 @@
 
 .diagnostico-progress {
     width: 100%;
-    height: 10px;
+    height: 11px;
 
-    background: #e3e9f1;
+    margin-bottom: 26px;
 
-    border-radius: 10px;
+    background: #e8eef7;
+
+    border-radius: 20px;
 
     overflow: hidden;
-
-    margin-bottom: 25px;
 }
 
 .diagnostico-progress-bar {
     height: 100%;
 
-    background: #2563eb;
+    background: linear-gradient(90deg,
+            #2563eb,
+            #3b82f6);
 
-    border-radius: 10px;
+    border-radius: 20px;
 
     transition: width 0.4s ease;
 }
@@ -477,48 +618,123 @@
 
 .diagnostico-grid {
     display: grid;
+
     grid-template-columns: 1fr 1fr;
 
-    gap: 20px;
+    gap: 18px;
 }
 
 .diagnostico-grid>div {
+    position: relative;
+
+    padding: 20px;
+
     background: #ffffff;
 
-    border: 1px solid #e4e9f0;
+    border: 1px solid #e2e8f0;
 
-    border-radius: 10px;
+    border-radius: 14px;
 
-    padding: 18px;
+    overflow: hidden;
 }
+
+
+/* IDENTIDADE DOS BLOCOS */
+
+.diagnostico-grid>div::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: #16a34a;
+}
+
+.diagnostico-grid>div:nth-child(2)::before {
+    background: #f97316;
+}
+
+
+/* TÍTULOS */
 
 .diagnostico-grid h4 {
-    margin: 0 0 12px;
+    margin: 0 0 14px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 14px;
+    font-weight: 700;
 }
+
+
+/* LISTAS */
 
 .diagnostico-grid ul {
     margin: 0;
-    padding-left: 20px;
+
+    padding: 0;
+
+    list-style: none;
 }
 
 .diagnostico-grid li {
-    margin-bottom: 7px;
+    position: relative;
 
-    color: #61738d;
+    margin-bottom: 9px;
 
-    font-size: 14px;
+    padding-left: 22px;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+}
+
+
+/* COMPETÊNCIAS ENCONTRADAS */
+
+.diagnostico-grid>div:first-child li::before {
+    content: "✓";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    color: #16a34a;
+
+    font-weight: 800;
+}
+
+
+/* COMPETÊNCIAS FALTANTES */
+
+.diagnostico-grid>div:nth-child(2) li::before {
+    content: "+";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    color: #f97316;
+
+    font-weight: 800;
 }
 
 .diagnostico-grid p {
     margin: 0;
 
-    color: #61738d;
+    color: #64748b;
 
-    font-size: 14px;
+    font-size: 13px;
+
     line-height: 1.5;
 }
 
@@ -528,19 +744,20 @@
 ================================ */
 
 .diagnostico-cursos {
-    margin-top: 20px;
+    margin-top: 22px;
 }
 
 .diagnostico-cursos h4 {
-    margin: 0 0 12px;
+    margin: 0 0 13px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 15px;
 }
 
 .curso-list {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
 
     gap: 12px;
@@ -548,25 +765,28 @@
 
 .curso-card {
     display: flex;
+
     flex-direction: column;
+
     gap: 5px;
 
     padding: 15px;
 
     background: #ffffff;
 
-    border: 1px solid #e4e9f0;
+    border: 1px solid #e2e8f0;
+
     border-radius: 10px;
 }
 
 .curso-card strong {
-    color: #17365d;
+    color: #172033;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .curso-card span {
-    color: #61738d;
+    color: #64748b;
 
     font-size: 12px;
 }
@@ -582,6 +802,7 @@
     background: #ffffff;
 
     border: 1px solid #e3e9f1;
+
     border-radius: 16px;
 
     padding: 50px 30px;
@@ -601,68 +822,48 @@
 
 
 /* ================================
-   RESPONSIVIDADE
-================================ */
-
-@media (max-width: 768px) {
-
-    .vagas-navbar {
-        padding: 0 20px;
-    }
-
-    .vagas-container {
-        width: calc(100% - 30px);
-        padding-top: 35px;
-    }
-
-    .vagas-header h1 {
-        font-size: 28px;
-    }
-
-    .vaga-card {
-        padding: 20px;
-    }
-
-    .vaga-card-top {
-        flex-direction: column;
-    }
-
-    .vaga-status {
-        align-self: flex-start;
-    }
-
-    .vaga-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .vaga-compatibilidade-button,
-    .vaga-candidatura-button {
-        width: 100%;
-    }
-
-    .diagnostico-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .curso-list {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-/* ================================
    FORMULÁRIO DE VAGA
 ================================ */
 
 .vaga-form-container {
+    position: relative;
+
     background: #ffffff;
-    border: 1px solid #e3e9f1;
-    border-radius: 18px;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 16px;
+
     padding: 32px;
+
     margin-bottom: 40px;
-    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.06);
+
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+
+    overflow: hidden;
 }
+
+
+/* IDENTIDADE DO FORMULÁRIO */
+
+.vaga-form-container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 5px;
+    height: 100%;
+
+    background: linear-gradient(180deg,
+            #2563eb,
+            #3b82f6);
+}
+
+
+/* CABEÇALHO */
 
 .vaga-form-header {
     margin-bottom: 28px;
@@ -674,20 +875,29 @@
 
 .vaga-form-header h2 {
     margin: 0 0 8px;
-    color: #17365d;
+
+    color: #172033;
+
     font-size: 24px;
+    font-weight: 750;
+
     line-height: 1.3;
 }
 
 .vaga-form-header p {
     margin: 0;
+
     color: #61738d;
+
     font-size: 14px;
+
     line-height: 1.5;
 }
 
 
-/* GRID DOS CAMPOS */
+/* ================================
+   GRID DOS CAMPOS
+================================ */
 
 .vaga-form {
     width: 100%;
@@ -695,23 +905,32 @@
 
 .vaga-form-grid {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
+
     gap: 20px;
+
     margin-bottom: 20px;
 }
 
 
-/* CAMPO */
+/* ================================
+   CAMPO
+================================ */
 
 .vaga-form-field {
     display: flex;
+
     flex-direction: column;
+
     gap: 8px;
 }
 
 .vaga-form-field label {
-    color: #17365d;
+    color: #172033;
+
     font-size: 13px;
+
     font-weight: 700;
 }
 
@@ -719,17 +938,21 @@
 .vaga-form-field select,
 .vaga-form-field textarea {
     width: 100%;
+
     box-sizing: border-box;
 
     border: 1px solid #d6deea;
+
     border-radius: 9px;
 
     background: #ffffff;
-    color: #17365d;
+
+    color: #172033;
 
     padding: 12px 14px;
 
     font-family: inherit;
+
     font-size: 14px;
 
     outline: none;
@@ -755,7 +978,10 @@
 .vaga-form-field select:focus,
 .vaga-form-field textarea:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+
     background: #ffffff;
 }
 
@@ -767,7 +993,9 @@
 }
 
 
-/* DESCRIÇÃO */
+/* ================================
+   DESCRIÇÃO
+================================ */
 
 .vaga-form>.vaga-form-field {
     margin-bottom: 24px;
@@ -775,17 +1003,24 @@
 
 .vaga-form-field textarea {
     min-height: 130px;
+
     resize: vertical;
+
     line-height: 1.5;
 }
 
 
-/* AÇÕES */
+/* ================================
+   AÇÕES DO FORMULÁRIO
+================================ */
 
 .vaga-form-actions {
     display: flex;
+
     align-items: center;
+
     justify-content: flex-end;
+
     gap: 12px;
 
     padding-top: 20px;
@@ -794,18 +1029,23 @@
 }
 
 
-/* BOTÃO SALVAR */
+/* ================================
+   BOTÃO SALVAR
+================================ */
 
 .vaga-form-save-button {
     border: none;
+
     border-radius: 9px;
 
     padding: 12px 22px;
 
     background: #2563eb;
+
     color: #ffffff;
 
     font-size: 14px;
+
     font-weight: 700;
 
     cursor: pointer;
@@ -818,30 +1058,41 @@
 
 .vaga-form-save-button:hover {
     background: #1d4ed8;
+
     transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
+
+    box-shadow:
+        0 5px 14px rgba(37, 99, 235, 0.20);
 }
 
 .vaga-form-save-button:disabled {
     opacity: 0.65;
+
     cursor: not-allowed;
+
     transform: none;
+
     box-shadow: none;
 }
 
 
-/* BOTÃO CANCELAR */
+/* ================================
+   BOTÃO CANCELAR
+================================ */
 
 .vaga-form-cancel-button {
     border: 1px solid #d6deea;
+
     border-radius: 9px;
 
     padding: 11px 20px;
 
     background: #ffffff;
+
     color: #52657e;
 
     font-size: 14px;
+
     font-weight: 700;
 
     cursor: pointer;
@@ -853,23 +1104,71 @@
 
 .vaga-form-cancel-button:hover {
     background: #f5f7fa;
+
     border-color: #c5cfdd;
 }
 
 .vaga-form-cancel-button:disabled {
     opacity: 0.6;
+
     cursor: not-allowed;
 }
 
 
 /* ================================
-   RESPONSIVIDADE DO FORMULÁRIO
+   RESPONSIVIDADE
 ================================ */
 
 @media (max-width: 768px) {
 
+    .vagas-navbar {
+        padding: 0 20px;
+    }
+
+    .vagas-container {
+        width: calc(100% - 30px);
+
+        padding-top: 35px;
+    }
+
+    .vagas-header h1 {
+        font-size: 28px;
+    }
+
+    .vaga-card {
+        padding: 20px;
+    }
+
+    .vaga-card-top {
+        flex-direction: column;
+    }
+
+    .vaga-status {
+        align-self: flex-start;
+    }
+
+    .vaga-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .vaga-compatibilidade-button,
+    .vaga-candidatura-button {
+        width: 100%;
+    }
+
+    .diagnostico-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .curso-list {
+        grid-template-columns: 1fr;
+    }
+
     .vaga-form-container {
         padding: 22px;
+
         border-radius: 14px;
     }
 
@@ -879,11 +1178,13 @@
 
     .vaga-form-grid {
         grid-template-columns: 1fr;
+
         gap: 18px;
     }
 
     .vaga-form-actions {
         flex-direction: column;
+
         align-items: stretch;
     }
 
@@ -891,4 +1192,317 @@
     .vaga-form-cancel-button {
         width: 100%;
     }
+}
+
+/* ========================================
+   AÇÕES ADMINISTRATIVAS DA EMPRESA
+======================================== */
+
+.vaga-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #edf0f4;
+}
+
+
+/* BOTÃO EDITAR */
+
+.vaga-edit-button,
+.vaga-actions button:nth-child(3) {
+    border: 1px solid #cbd5e1;
+
+    background: #ffffff;
+    color: #2563eb;
+
+    border-radius: 8px;
+
+    padding: 10px 15px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.vaga-edit-button:hover,
+.vaga-actions button:nth-child(3):hover {
+    background: #eff6ff;
+
+    border-color: #2563eb;
+
+    color: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+/* BOTÃO EXCLUIR */
+
+.vaga-delete-button,
+.vaga-actions button:nth-child(4) {
+    border: 1px solid #fecaca;
+
+    background: #ffffff;
+    color: #dc2626;
+
+    border-radius: 8px;
+
+    padding: 10px 15px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.vaga-delete-button:hover,
+.vaga-actions button:nth-child(4):hover {
+    background: #fef2f2;
+
+    border-color: #dc2626;
+
+    color: #b91c1c;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   BOTÃO VER CANDIDATOS
+======================================== */
+
+.vaga-candidatos-button {
+    border: 1px solid #2563eb;
+
+    background: #ffffff;
+    color: #2563eb;
+
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.vaga-candidatos-button:hover {
+    background: #eff6ff;
+
+    border-color: #1d4ed8;
+
+    color: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================================
+   ÁREA DE CANDIDATOS
+======================================== */
+
+.vaga-candidatos {
+    margin-top: 18px;
+
+    padding: 22px;
+
+    background: #f8fafc;
+
+    border: 1px solid #dbe3ef;
+
+    border-radius: 14px;
+}
+
+
+/* TÍTULO */
+
+.vaga-candidatos h3 {
+    margin: 0 0 18px;
+
+    color: #172033;
+
+    font-size: 18px;
+    font-weight: 750;
+}
+
+
+/* CARD DO CANDIDATO */
+
+.candidato-card {
+    position: relative;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 12px;
+
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.candidato-card:hover {
+    border-color: #cbd5e1;
+
+    box-shadow: 0 7px 18px rgba(15, 23, 42, 0.07);
+}
+
+
+/* IDENTIDADE DO CANDIDATO */
+
+.candidato-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: linear-gradient(180deg,
+            #2563eb,
+            #3b82f6);
+
+    border-radius: 12px 0 0 12px;
+}
+
+
+/* NOME */
+
+.candidato-card h4 {
+    margin: 0 0 6px;
+
+    color: #172033;
+
+    font-size: 17px;
+    font-weight: 750;
+}
+
+
+/* DADOS */
+
+.candidato-card p {
+    margin: 4px 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   COMPETÊNCIAS DO CANDIDATO
+======================================== */
+
+.candidato-competencias {
+    margin-top: 16px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #edf0f4;
+}
+
+.candidato-competencias-title {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.candidato-competencias-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.candidato-competencia {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 11px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    border-radius: 20px;
+
+    color: #1d4ed8;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE - AÇÕES
+======================================== */
+
+@media (max-width: 768px) {
+
+    .vaga-actions {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+    }
+
+    .vaga-actions button {
+        width: 100%;
+    }
+
+    .vaga-candidatos {
+        padding: 16px;
+    }
+
+    .candidato-card {
+        padding: 17px;
+    }
+
 }

@@ -1,21 +1,35 @@
 import { useEffect, useState } from 'react'
 
 import VagaForm from '../components/VagaForm'
-import VagaCard from '../components/VagaCard'
 
 import { fetchAPI } from '../config/api'
 
 import './Vagas.css'
 
+
 function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
     const [vagas, setVagas] = useState([])
+
     const [vagaEditando, setVagaEditando] = useState(null)
+
     const [carregando, setCarregando] = useState(true)
 
+
     const [vagaSelecionada, setVagaSelecionada] = useState(null)
+
     const [candidatos, setCandidatos] = useState([])
-    const [carregandoCandidatos, setCarregandoCandidatos] = useState(false)
+
+    const [competenciasCandidatos, setCompetenciasCandidatos] =
+        useState({})
+
+    const [carregandoCandidatos, setCarregandoCandidatos] =
+        useState(false)
+
+
+    // ==================================================
+    // CARREGAR VAGAS
+    // ==================================================
 
     async function carregarVagas() {
 
@@ -31,7 +45,11 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
             const resposta = await fetchAPI(endpoint)
 
             if (!resposta.ok) {
-                alert('Não foi possível carregar as vagas.')
+
+                alert(
+                    'Não foi possível carregar as vagas.'
+                )
+
                 return
             }
 
@@ -56,9 +74,17 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
         }
     }
 
+
     useEffect(() => {
+
         carregarVagas()
+
     }, [usuario])
+
+
+    // ==================================================
+    // EDITAR VAGA
+    // ==================================================
 
     function iniciarEdicao(vaga) {
 
@@ -70,9 +96,16 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
         })
     }
 
+
     function cancelarEdicao() {
+
         setVagaEditando(null)
     }
+
+
+    // ==================================================
+    // EXCLUIR VAGA
+    // ==================================================
 
     async function excluirVaga(vaga) {
 
@@ -83,6 +116,7 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
         if (!confirmar) return
 
+
         try {
 
             const resposta =
@@ -92,6 +126,7 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
                         method: 'DELETE'
                     }
                 )
+
 
             if (!resposta.ok) {
 
@@ -106,22 +141,31 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
                 return
             }
 
+
             alert(
                 'Vaga excluída com sucesso!'
             )
 
+
             if (
                 vagaEditando?.id === vaga.id
             ) {
+
                 setVagaEditando(null)
             }
+
 
             if (
                 vagaSelecionada?.id === vaga.id
             ) {
+
                 setVagaSelecionada(null)
+
                 setCandidatos([])
+
+                setCompetenciasCandidatos({})
             }
+
 
             await carregarVagas()
 
@@ -138,6 +182,11 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
         }
     }
 
+
+    // ==================================================
+    // APÓS SALVAR
+    // ==================================================
+
     async function aposSalvar() {
 
         setVagaEditando(null)
@@ -145,28 +194,99 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
         await carregarVagas()
     }
 
+
+    // ==================================================
+    // CARREGAR COMPETÊNCIAS DO CANDIDATO
+    // ==================================================
+
+    async function carregarCompetenciasCandidato(
+        candidato
+    ) {
+
+        try {
+
+            const resposta =
+                await fetchAPI(
+                    `/usuarios/${candidato.usuarioId}/competencias`
+                )
+
+
+            if (!resposta.ok) {
+
+                console.error(
+                    `Não foi possível carregar competências do candidato ${candidato.usuarioId}.`
+                )
+
+                return {
+                    candidatoId: candidato.usuarioId,
+                    competencias: []
+                }
+            }
+
+
+            const dados =
+                await resposta.json()
+
+
+            return {
+                candidatoId: candidato.usuarioId,
+                competencias: dados
+            }
+
+        } catch (erro) {
+
+            console.error(
+                'Erro ao carregar competências do candidato:',
+                erro
+            )
+
+            return {
+                candidatoId: candidato.usuarioId,
+                competencias: []
+            }
+        }
+    }
+
+
+    // ==================================================
+    // VISUALIZAR CANDIDATOS
+    // ==================================================
+
     async function visualizarCandidatos(vaga) {
 
         // Se clicar novamente na mesma vaga,
         // fecha a lista de candidatos.
-        if (vagaSelecionada?.id === vaga.id) {
+
+        if (
+            vagaSelecionada?.id === vaga.id
+        ) {
 
             setVagaSelecionada(null)
+
             setCandidatos([])
+
+            setCompetenciasCandidatos({})
 
             return
         }
 
+
         try {
 
             setVagaSelecionada(vaga)
+
             setCandidatos([])
+
+            setCompetenciasCandidatos({})
+
             setCarregandoCandidatos(true)
+
 
             const resposta =
                 await fetchAPI(
                     `/candidaturas/vaga/${vaga.id}`
                 )
+
 
             if (!resposta.ok) {
 
@@ -183,10 +303,46 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
                 return
             }
 
+
             const dados =
                 await resposta.json()
 
+
             setCandidatos(dados)
+
+
+            // ==========================================
+            // BUSCAR COMPETÊNCIAS DOS CANDIDATOS
+            // ==========================================
+
+            const resultadosCompetencias =
+                await Promise.all(
+                    dados.map(
+                        candidato =>
+                            carregarCompetenciasCandidato(
+                                candidato
+                            )
+                    )
+                )
+
+
+            const mapaCompetencias = {}
+
+
+            resultadosCompetencias.forEach(
+                resultado => {
+
+                    mapaCompetencias[
+                        resultado.candidatoId
+                    ] = resultado.competencias
+
+                }
+            )
+
+
+            setCompetenciasCandidatos(
+                mapaCompetencias
+            )
 
         } catch (erro) {
 
@@ -207,18 +363,28 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
         }
     }
 
+
     const isEmpresa =
         usuario?.perfil === 'EMPRESA'
+
 
     return (
 
         <div className="vagas-page">
 
+
+            {/* ==========================================
+                NAVBAR
+            ========================================== */}
+
             <header className="vagas-navbar">
 
                 <div className="vagas-logo">
+
                     Conecta<span>+</span>
+
                 </div>
+
 
                 <div className="vagas-navbar-actions">
 
@@ -228,6 +394,7 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
                     >
                         ← Dashboard
                     </button>
+
 
                     <button
                         onClick={onSair}
@@ -240,7 +407,17 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
             </header>
 
+
+            {/* ==========================================
+                CONTEÚDO
+            ========================================== */}
+
             <main className="vagas-container">
+
+
+                {/* ======================================
+                    CABEÇALHO
+                ====================================== */}
 
                 <div className="vagas-header">
 
@@ -254,6 +431,7 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
                         </span>
 
+
                         <h1>
 
                             {isEmpresa
@@ -261,6 +439,7 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
                                 : 'Gerenciar vagas'}
 
                         </h1>
+
 
                         <p>
 
@@ -274,13 +453,24 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
                 </div>
 
+
+                {/* ======================================
+                    FORMULÁRIO
+                ====================================== */}
+
                 <VagaForm
                     vagaEditando={vagaEditando}
                     onSalvo={aposSalvar}
                     onCancelar={cancelarEdicao}
                 />
 
+
+                {/* ======================================
+                    LISTA DE VAGAS
+                ====================================== */}
+
                 <section className="vagas-list">
+
 
                     <div className="vagas-header">
 
@@ -294,11 +484,13 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
                             </span>
 
+
                             <h2>
                                 Oportunidades
                             </h2>
 
                         </div>
+
 
                         <span>
                             {vagas.length} vaga(s)
@@ -306,11 +498,13 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
                     </div>
 
+
                     {carregando ? (
 
                         <div className="vagas-loading">
                             Carregando vagas...
                         </div>
+
 
                     ) : vagas.length === 0 ? (
 
@@ -326,44 +520,151 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
                         </div>
 
+
                     ) : (
 
                         vagas.map((vaga) => (
 
-                            <div key={vaga.id}>
+                            <div
+                                key={vaga.id}
+                                className="vaga-item"
+                            >
 
-                                <VagaCard
-                                    vaga={vaga}
-                                    inscrito={false}
-                                    diagnostico={null}
-                                    carregandoCandidatura={null}
-                                    onCompatibilidade={() => { }}
-                                    onCandidatar={() => { }}
-                                    onEditar={iniciarEdicao}
-                                    onExcluir={excluirVaga}
-                                />
 
-                                <div
-                                    style={{
-                                        marginTop: '10px',
-                                        marginBottom: '20px'
-                                    }}
-                                >
+                                {/* ==================================
+                                    CARD DA VAGA
+                                ================================== */}
+
+                                <article className="vaga-card">
+
+
+                                    <div className="vaga-card-top">
+
+                                        <div>
+
+                                            <span className="vaga-company">
+                                                {vaga.empresa}
+                                            </span>
+
+
+                                            <h2>
+                                                {vaga.titulo}
+                                            </h2>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <p className="vaga-description">
+                                        {vaga.descricao}
+                                    </p>
+
+
+                                    <div className="vaga-info">
+
+                                        <span>
+                                            📍 {vaga.cidade}
+                                        </span>
+
+
+                                        <span>
+                                            💼 {vaga.modalidade}
+                                        </span>
+
+
+                                        {vaga.salario && (
+
+                                            <span>
+
+                                                💰 R${' '}
+                                                {Number(
+                                                    vaga.salario
+                                                ).toLocaleString(
+                                                    'pt-BR',
+                                                    {
+                                                        minimumFractionDigits: 2
+                                                    }
+                                                )}
+
+                                            </span>
+
+                                        )}
+
+                                    </div>
+
+
+                                    {/* ==================================
+                                        AÇÕES
+                                    ================================== */}
+
+                                    <div className="vaga-actions">
+
+
+                                        <button
+                                            type="button"
+                                            className="vaga-compatibilidade-button"
+                                            onClick={() => { }}
+                                        >
+                                            Ver compatibilidade →
+                                        </button>
+
+
+                                        {/* CANDIDATAR-SE:
+                                            SOMENTE PARA USUÁRIO NORMAL */}
+
+                                        {!isEmpresa && (
+
+                                            <button
+                                                type="button"
+                                                className="vaga-candidatura-button"
+                                                onClick={() => { }}
+                                            >
+                                                Candidatar-se
+                                            </button>
+
+                                        )}
+
+
+                                        <button
+                                            type="button"
+                                            className="vaga-edit-button"
+                                            onClick={() =>
+                                                iniciarEdicao(vaga)
+                                            }
+                                        >
+                                            ✏️ Editar
+                                        </button>
+
+
+                                        <button
+                                            type="button"
+                                            className="vaga-delete-button"
+                                            onClick={() =>
+                                                excluirVaga(vaga)
+                                            }
+                                        >
+                                            🗑️ Excluir
+                                        </button>
+
+                                    </div>
+
+
+                                </article>
+
+
+                                {/* ==================================
+                                    BOTÃO CANDIDATOS
+                                ================================== */}
+
+                                <div className="vaga-candidatos-actions">
 
                                     <button
                                         type="button"
+                                        className="vaga-candidatos-button"
                                         onClick={() =>
                                             visualizarCandidatos(vaga)
                                         }
-                                        style={{
-                                            padding: '10px 16px',
-                                            border: 'none',
-                                            borderRadius: '8px',
-                                            background: '#0f3d91',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            fontWeight: '600'
-                                        }}
                                     >
 
                                         {vagaSelecionada?.id === vaga.id
@@ -374,21 +675,33 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
 
                                 </div>
 
+
+                                {/* ==================================
+                                    CANDIDATOS
+                                ================================== */}
+
                                 {vagaSelecionada?.id === vaga.id && (
 
-                                    <div
-                                        style={{
-                                            marginBottom: '30px',
-                                            padding: '20px',
-                                            background: '#ffffff',
-                                            borderRadius: '12px',
-                                            boxShadow: '0 8px 25px rgba(0,0,0,0.08)'
-                                        }}
-                                    >
+                                    <div className="vaga-candidatos">
 
-                                        <h3>
-                                            Candidatos — {vaga.titulo}
-                                        </h3>
+
+                                        <div className="vaga-candidatos-header">
+
+                                            <div>
+
+                                                <span className="vagas-label">
+                                                    CANDIDATURAS
+                                                </span>
+
+
+                                                <h3>
+                                                    Candidatos — {vaga.titulo}
+                                                </h3>
+
+                                            </div>
+
+                                        </div>
+
 
                                         {carregandoCandidatos ? (
 
@@ -396,72 +709,139 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
                                                 Carregando candidatos...
                                             </p>
 
+
                                         ) : candidatos.length === 0 ? (
 
                                             <p>
                                                 Ainda não há candidatos para esta vaga.
                                             </p>
 
+
                                         ) : (
 
                                             <div>
 
-                                                <p>
+
+                                                <p className="vaga-candidatos-count">
+
                                                     <strong>
                                                         {candidatos.length}
                                                     </strong>{' '}
+
                                                     candidato(s)
+
                                                 </p>
 
-                                                {candidatos.map((candidato) => (
 
-                                                    <div
-                                                        key={candidato.id}
-                                                        style={{
-                                                            padding: '16px',
-                                                            marginTop: '12px',
-                                                            border: '1px solid #e5e7eb',
-                                                            borderRadius: '10px'
-                                                        }}
-                                                    >
+                                                {candidatos.map(
+                                                    (candidato) => {
 
-                                                        <h4>
-                                                            👤 {candidato.nome}
-                                                        </h4>
+                                                        const competencias =
+                                                            competenciasCandidatos[
+                                                            candidato.usuarioId
+                                                            ] || []
 
-                                                        <p>
-                                                            📧 {candidato.email}
-                                                        </p>
 
-                                                        <p>
-                                                            📱 {candidato.telefone}
-                                                        </p>
+                                                        return (
 
-                                                        <p>
-                                                            📍 {candidato.cidade}
-                                                        </p>
+                                                            <div
+                                                                key={candidato.id}
+                                                                className="candidato-card"
+                                                            >
 
-                                                        <p>
-                                                            <strong>
-                                                                Status:
-                                                            </strong>{' '}
-                                                            {candidato.status}
-                                                        </p>
 
-                                                        <p>
-                                                            <strong>
-                                                                Data da candidatura:
-                                                            </strong>{' '}
-                                                            {new Date(
-                                                                candidato.dataCandidatura
-                                                            ).toLocaleString(
-                                                                'pt-BR'
-                                                            )}
-                                                        </p>
+                                                                <h4>
+                                                                    👤 {candidato.nome}
+                                                                </h4>
 
-                                                    </div>
 
-                                                ))}
+                                                                <p>
+                                                                    📧 {candidato.email}
+                                                                </p>
+
+
+                                                                <p>
+                                                                    📱 {candidato.telefone}
+                                                                </p>
+
+
+                                                                <p>
+                                                                    📍 {candidato.cidade}
+                                                                </p>
+
+
+                                                                <p>
+
+                                                                    <strong>
+                                                                        Status:
+                                                                    </strong>{' '}
+
+                                                                    {candidato.status}
+
+                                                                </p>
+
+
+                                                                <p>
+
+                                                                    <strong>
+                                                                        Data da candidatura:
+                                                                    </strong>{' '}
+
+                                                                    {new Date(
+                                                                        candidato.dataCandidatura
+                                                                    ).toLocaleString(
+                                                                        'pt-BR'
+                                                                    )}
+
+                                                                </p>
+
+
+                                                                {/* ==========================
+                                                                    COMPETÊNCIAS
+                                                                ========================== */}
+
+                                                                <div className="candidato-competencias">
+
+                                                                    <span className="candidato-competencias-title">
+                                                                        COMPETÊNCIAS
+                                                                    </span>
+
+
+                                                                    {competencias.length === 0 ? (
+
+                                                                        <p>
+                                                                            Nenhuma competência cadastrada.
+                                                                        </p>
+
+                                                                    ) : (
+
+                                                                        <div className="candidato-competencias-list">
+
+                                                                            {competencias.map(
+                                                                                (competencia) => (
+
+                                                                                    <span
+                                                                                        key={competencia.id}
+                                                                                        className="candidato-competencia"
+                                                                                    >
+                                                                                        ✓ {competencia.nome}
+                                                                                    </span>
+
+                                                                                )
+                                                                            )}
+
+                                                                        </div>
+
+                                                                    )}
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        )
+                                                    }
+                                                )}
 
                                             </div>
 
@@ -484,5 +864,6 @@ function GerenciarVagas({ usuario, onVoltar, onSair }) {
         </div>
     )
 }
+
 
 export default GerenciarVagas

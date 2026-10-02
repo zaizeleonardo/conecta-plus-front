@@ -292,16 +292,13 @@ function App() {
 
               event.preventDefault()
 
-
               const formData =
                 new FormData(
                   event.currentTarget
                 )
 
-
               const tipoCadastro =
                 formData.get('tipoCadastro')
-
 
               const usuario = {
 
@@ -390,7 +387,6 @@ function App() {
 
           >
 
-
             {/* ============================== */}
             {/* TIPO DE CADASTRO */}
             {/* ============================== */}
@@ -410,9 +406,6 @@ function App() {
                   flexWrap: 'wrap'
                 }}
               >
-
-
-                {/* CANDIDATO */}
 
                 <label
                   style={{
@@ -434,8 +427,6 @@ function App() {
 
                 </label>
 
-
-                {/* EMPRESA */}
 
                 <label
                   style={{
@@ -461,9 +452,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
             {/* NOME */}
-            {/* ============================== */}
 
             <div className="form-group">
 
@@ -482,9 +471,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
             {/* E-MAIL */}
-            {/* ============================== */}
 
             <div className="form-group">
 
@@ -503,9 +490,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
             {/* SENHA */}
-            {/* ============================== */}
 
             <div className="form-group">
 
@@ -525,9 +510,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
             {/* TELEFONE */}
-            {/* ============================== */}
 
             <div className="form-group">
 
@@ -546,9 +529,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
             {/* CIDADE */}
-            {/* ============================== */}
 
             <div className="form-group">
 
@@ -567,9 +548,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
-            {/* OBJETIVO PROFISSIONAL */}
-            {/* ============================== */}
+            {/* OBJETIVO */}
 
             <div className="form-group">
 
@@ -588,9 +567,7 @@ function App() {
             </div>
 
 
-            {/* ============================== */}
             {/* BOTÃO */}
-            {/* ============================== */}
 
             <button
               type="submit"
@@ -603,9 +580,7 @@ function App() {
           </form>
 
 
-          {/* ============================== */}
           {/* RODAPÉ */}
-          {/* ============================== */}
 
           <div className="login-footer">
 
@@ -719,16 +694,16 @@ function App() {
         <div className="hero-content">
 
           <span className="hero-badge">
-            🚀 Conectando talentos a oportunidades
+            🤝 Conectando pessoas a novas oportunidades
           </span>
 
 
           <h1>
 
-            Descubra o seu
+            Encontre o próximo passo
 
             <span>
-              potencial profissional
+              da sua carreira
             </span>
 
           </h1>
@@ -736,10 +711,10 @@ function App() {
 
           <p>
 
-            O Conecta+ analisa suas competências,
-            identifica as habilidades que você
-            precisa desenvolver e encontra
-            oportunidades alinhadas ao seu perfil.
+            Você sabe onde quer chegar. O Conecta+
+            ajuda a descobrir o caminho: entenda suas
+            competências, desenvolva novas habilidades
+            e encontre oportunidades que combinam com você.
 
           </p>
 
@@ -856,12 +831,13 @@ function App() {
           <div className="recommendation">
 
             <strong>
-              📚 Recomendação
+              💡 Recomendação
             </strong>
 
             <p>
-              Desenvolva Docker para aumentar
-              sua compatibilidade.
+              Você está quase lá! Desenvolver Docker
+              pode aumentar sua compatibilidade com
+              essa oportunidade.
             </p>
 
           </div>
@@ -887,13 +863,13 @@ function App() {
           </span>
 
           <h2>
-            Sua evolução profissional em um só lugar
+            Seu próximo passo começa com o que você já sabe.
           </h2>
 
           <p>
-            O Conecta+ transforma suas competências
-            em oportunidades reais de desenvolvimento
-            profissional.
+            Entenda onde você está, descubra onde pode
+            chegar e encontre oportunidades para dar
+            o próximo passo.
           </p>
 
         </div>
@@ -908,12 +884,13 @@ function App() {
             </div>
 
             <h3>
-              Crie seu perfil
+              Conte um pouco sobre você
             </h3>
 
             <p>
-              Cadastre suas informações profissionais
-              e suas competências.
+              Mostre sua experiência, seus objetivos
+              e as competências que já fazem parte
+              da sua trajetória.
             </p>
 
           </article>
@@ -926,12 +903,12 @@ function App() {
             </div>
 
             <h3>
-              Descubra sua compatibilidade
+              Descubra onde você se encaixa
             </h3>
 
             <p>
-              Compare suas competências com os
-              requisitos das oportunidades disponíveis.
+              Veja como suas competências se relacionam
+              com as oportunidades disponíveis.
             </p>
 
           </article>
@@ -944,12 +921,12 @@ function App() {
             </div>
 
             <h3>
-              Desenvolva suas habilidades
+              Descubra o que pode desenvolver
             </h3>
 
             <p>
-              Receba recomendações de cursos para
-              preencher suas principais lacunas profissionais.
+              Identifique suas lacunas e encontre
+              caminhos para continuar evoluindo.
             </p>
 
           </article>
@@ -975,30 +952,47 @@ function App() {
           </span>
 
           <h2>
-            Transformando competências em oportunidades
+            Todo profissional tem potencial.
+            <span> Às vezes, falta encontrar o caminho.</span>
           </h2>
 
           <p>
-            O Conecta+ foi desenvolvido para apoiar
-            pessoas que buscam inserção, recolocação
-            ou transição profissional.
+            O Conecta+ nasceu para ajudar pessoas que estão
+            buscando uma oportunidade, uma recolocação ou
+            até mesmo um novo caminho profissional.
           </p>
 
           <p>
-            A plataforma identifica competências,
-            apresenta oportunidades compatíveis e
-            indica caminhos para desenvolver novas habilidades.
+            A ideia é simples: entender o que você já sabe,
+            mostrar onde suas competências podem abrir portas
+            e indicar caminhos para continuar evoluindo.
           </p>
+
+          <div className="about-highlight">
+
+            <span>
+              💡
+            </span>
+
+            <p>
+              Porque encontrar uma oportunidade é importante.
+              Saber como chegar até ela também.
+            </p>
+
+          </div>
 
         </div>
 
 
         <div className="ods-card">
 
-          <h3>
-            Impacto social
-          </h3>
+          <span className="ods-label">
+            NOSSO IMPACTO
+          </span>
 
+          <h3>
+            Tecnologia que também gera oportunidades.
+          </h3>
 
           <div className="ods">
 
@@ -1016,10 +1010,10 @@ function App() {
 
           </div>
 
-
           <p>
             Educação de qualidade, trabalho decente
-            e redução das desigualdades.
+            e redução das desigualdades fazem parte
+            da inspiração por trás do Conecta+.
           </p>
 
         </div>
@@ -1033,17 +1027,26 @@ function App() {
 
       <footer>
 
-        <div className="logo">
-          CONECTA<span>+</span>
+        <div className="footer-brand">
+
+          <div className="logo">
+            CONECTA<span>+</span>
+          </div>
+
+          <p>
+            Conectando pessoas, competências e oportunidades.
+          </p>
+
         </div>
 
-        <p>
-          Conectando competências a oportunidades.
-        </p>
 
-        <span>
-          © 2026 Conecta+.
-        </span>
+        <div className="footer-copy">
+
+          <span>
+            © 2026 Conecta+ • Todos os direitos reservados
+          </span>
+
+        </div>
 
       </footer>
 

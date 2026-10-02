@@ -3,9 +3,20 @@
 ======================================== */
 
 .dashboard-page {
+    position: relative;
     min-height: 100vh;
-    background: #f5f8fc;
-    color: #17365d;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 8% 5%,
+            rgba(37, 99, 235, 0.08),
+            transparent 28%),
+        radial-gradient(circle at 92% 45%,
+            rgba(249, 115, 22, 0.06),
+            transparent 25%),
+        #f8fafc;
+
+    color: #172033;
 }
 
 
@@ -20,9 +31,8 @@
     align-items: center;
     justify-content: center;
 
-    background: #f5f8fc;
-
-    color: #17365d;
+    background: #f8fafc;
+    color: #172033;
 
     font-size: 18px;
     font-weight: 600;
@@ -42,9 +52,9 @@
 
     padding: 0 6%;
 
-    background: #ffffff;
+    background: #0b0f19;
 
-    border-bottom: 1px solid #e5eaf1;
+    border-bottom: 1px solid #1c2433;
 
     box-sizing: border-box;
 }
@@ -53,18 +63,18 @@
     font-size: 24px;
     font-weight: 800;
 
-    color: #17365d;
+    color: #ffffff;
 }
 
 .dashboard-logo span {
-    color: #ff7a00;
+    color: #f97316;
 }
 
 .dashboard-navbar-actions {
     display: flex;
     align-items: center;
 
-    gap: 12px;
+    gap: 10px;
 }
 
 
@@ -76,38 +86,44 @@
 .dashboard-sair-button {
     border-radius: 8px;
 
-    padding: 10px 18px;
+    padding: 9px 16px;
 
     font-size: 13px;
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .dashboard-vagas-button {
-    background: #ffffff;
-
-    color: #17365d;
-
-    border: 1px solid #d6deea;
-}
-
-.dashboard-vagas-button:hover {
-    background: #f1f5fa;
-}
-
-.dashboard-sair-button {
-    background: #17365d;
+    background: transparent;
 
     color: #ffffff;
 
-    border: 1px solid #17365d;
+    border: 1px solid #334155;
+}
+
+.dashboard-vagas-button:hover {
+    background: #1e293b;
+
+    border-color: #2563eb;
+}
+
+.dashboard-sair-button {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border: 1px solid #2563eb;
 }
 
 .dashboard-sair-button:hover {
-    background: #0f2948;
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+
+    transform: translateY(-1px);
 }
 
 
@@ -116,6 +132,9 @@
 ======================================== */
 
 .dashboard-container {
+    position: relative;
+    z-index: 1;
+
     width: min(1120px, 92%);
 
     margin: 0 auto;
@@ -148,7 +167,7 @@
 .dashboard-welcome h1 {
     margin: 0 0 10px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 34px;
     line-height: 1.2;
@@ -157,7 +176,7 @@
 .dashboard-welcome p {
     margin: 0;
 
-    color: #61738d;
+    color: #64748b;
 
     font-size: 15px;
 
@@ -170,23 +189,45 @@
 ======================================== */
 
 .dashboard-profile-card {
+    position: relative;
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     gap: 30px;
 
-    padding: 25px;
+    padding: 28px 30px;
 
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 
     background: #ffffff;
 
-    border: 1px solid #e3e9f1;
+    border: 1px solid #e2e8f0;
 
     border-radius: 16px;
 
-    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.05);
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+
+    overflow: hidden;
+}
+
+.dashboard-profile-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 5px;
+    height: 100%;
+
+    background: linear-gradient(180deg,
+            #2563eb,
+            #3b82f6);
 }
 
 .dashboard-profile-label {
@@ -194,9 +235,10 @@
 
     margin-bottom: 8px;
 
-    color: #718198;
+    color: #64748b;
 
     font-size: 11px;
+
     font-weight: 800;
 
     letter-spacing: 0.8px;
@@ -205,9 +247,9 @@
 .dashboard-profile-card h2 {
     margin: 0;
 
-    color: #17365d;
+    color: #172033;
 
-    font-size: 21px;
+    font-size: 23px;
 }
 
 .dashboard-profile-info {
@@ -218,19 +260,20 @@
 
 .dashboard-profile-info div {
     display: flex;
+
     flex-direction: column;
 
     gap: 5px;
 }
 
 .dashboard-profile-info span {
-    color: #718198;
+    color: #64748b;
 
     font-size: 11px;
 }
 
 .dashboard-profile-info strong {
-    color: #17365d;
+    color: #172033;
 
     font-size: 13px;
 }
@@ -241,7 +284,7 @@
 ======================================== */
 
 .dashboard-section {
-    margin-bottom: 28px;
+    margin-bottom: 32px;
 }
 
 .dashboard-section-header {
@@ -251,7 +294,7 @@
 .dashboard-section-header h2 {
     margin: 0 0 7px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 24px;
 }
@@ -259,7 +302,7 @@
 .dashboard-section-header p {
     margin: 0;
 
-    color: #61738d;
+    color: #64748b;
 
     font-size: 14px;
 
@@ -274,35 +317,43 @@
 .dashboard-skills {
     display: flex;
     flex-wrap: wrap;
-
-    gap: 10px;
-
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .dashboard-skill {
     display: inline-flex;
     align-items: center;
+    gap: 9px;
 
-    gap: 8px;
+    padding: 10px 12px 10px 14px;
 
-    padding: 9px 12px;
+    background: #eff6ff;
+    color: #1d4ed8;
 
-    background: #ffffff;
-
-    color: #17365d;
-
-    border: 1px solid #dce4ee;
-
-    border-radius: 20px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
 
     font-size: 13px;
     font-weight: 600;
+
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.dashboard-skill:hover {
+    transform: translateY(-1px);
+    border-color: #93c5fd;
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.10);
 }
 
 .remove-skill {
-    width: 20px;
-    height: 20px;
+    width: 21px;
+    height: 21px;
 
     display: flex;
     align-items: center;
@@ -311,26 +362,27 @@
     padding: 0;
 
     border: none;
-
     border-radius: 50%;
 
-    background: #edf1f5;
+    background: #dbeafe;
+    color: #2563eb;
 
-    color: #718198;
-
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .remove-skill:hover {
-    background: #ffe4e4;
-
-    color: #d33;
+    background: #fee2e2;
+    color: #dc2626;
+    transform: scale(1.08);
 }
-
 
 /* ========================================
    ADICIONAR COMPETÊNCIA
@@ -348,19 +400,23 @@
     color: #2563eb;
 
     font-size: 13px;
+
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .add-skill-button:hover {
     background: #eff6ff;
+
+    transform: translateY(-1px);
 }
 
 .add-skill-form {
     display: flex;
+
     align-items: center;
 
     gap: 10px;
@@ -371,7 +427,7 @@
 
     background: #ffffff;
 
-    border: 1px solid #e3e9f1;
+    border: 1px solid #e2e8f0;
 
     border-radius: 10px;
 }
@@ -381,13 +437,13 @@
 
     padding: 10px 12px;
 
-    border: 1px solid #d5deea;
+    border: 1px solid #cbd5e1;
 
     border-radius: 8px;
 
     background: #ffffff;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 13px;
 
@@ -396,6 +452,8 @@
 
 .add-skill-form select:focus {
     border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px #dbeafe;
 }
 
 .add-skill-form button {
@@ -410,9 +468,12 @@
     color: #ffffff;
 
     font-size: 13px;
+
     font-weight: 700;
 
     cursor: pointer;
+
+    transition: all 0.2s ease;
 }
 
 .add-skill-form button:hover {
@@ -431,15 +492,14 @@
 ======================================== */
 
 .dashboard-diagnostic-card {
-    padding: 25px;
+    padding: 28px;
 
     background: #ffffff;
 
-    border: 1px solid #e3e9f1;
-
+    border: 1px solid #dbe3ef;
     border-radius: 16px;
 
-    box-shadow: 0 8px 25px rgba(23, 54, 93, 0.05);
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
 }
 
 
@@ -453,19 +513,22 @@
 
     gap: 10px;
 
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .dashboard-score strong {
-    color: #17365d;
+    color: #2563eb;
 
-    font-size: 38px;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
 }
 
 .dashboard-score span {
-    color: #61738d;
+    color: #64748b;
 
     font-size: 14px;
+    font-weight: 500;
 }
 
 
@@ -476,13 +539,13 @@
 .dashboard-progress {
     width: 100%;
 
-    height: 10px;
+    height: 11px;
 
-    margin-bottom: 25px;
+    margin-bottom: 26px;
 
-    background: #e5eaf1;
+    background: #e8eef7;
 
-    border-radius: 10px;
+    border-radius: 20px;
 
     overflow: hidden;
 }
@@ -490,11 +553,13 @@
 .dashboard-progress-bar {
     height: 100%;
 
-    background: #2563eb;
+    background: linear-gradient(90deg,
+            #2563eb,
+            #3b82f6);
 
-    border-radius: 10px;
+    border-radius: 20px;
 
-    transition: width 0.4s ease;
+    transition: width 0.5s ease;
 }
 
 
@@ -511,41 +576,110 @@
 }
 
 .dashboard-diagnostic-item {
-    padding: 18px;
+    position: relative;
+
+    padding: 20px;
 
     background: #f8fafc;
 
-    border: 1px solid #e4e9f0;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
 
-    border-radius: 12px;
+    overflow: hidden;
 }
+
+
+/* LINHA DE IDENTIDADE */
+
+.dashboard-diagnostic-item::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: #2563eb;
+}
+
+.dashboard-diagnostic-item:last-child::before {
+    background: #f97316;
+}
+
+
+/* TÍTULO */
 
 .dashboard-diagnostic-item h3 {
-    margin: 0 0 13px;
+    margin: 0 0 15px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 14px;
+    font-weight: 700;
 }
+
+
+/* LISTA */
 
 .dashboard-diagnostic-item ul {
     margin: 0;
 
-    padding-left: 20px;
+    padding: 0;
+
+    list-style: none;
 }
 
 .dashboard-diagnostic-item li {
-    margin-bottom: 7px;
+    position: relative;
 
-    color: #61738d;
+    margin-bottom: 9px;
+    padding-left: 22px;
+
+    color: #475569;
 
     font-size: 13px;
+    line-height: 1.4;
+}
+
+
+/* CHECK DAS COMPETÊNCIAS */
+
+.dashboard-diagnostic-item:first-child li::before {
+    content: "✓";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    color: #16a34a;
+
+    font-weight: 800;
+}
+
+
+/* ALERTA DAS COMPETÊNCIAS FALTANTES */
+
+.dashboard-diagnostic-item:last-child li::before {
+    content: "+";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    color: #f97316;
+
+    font-weight: 800;
 }
 
 .dashboard-diagnostic-item p {
     margin: 0;
 
-    color: #61738d;
+    color: #64748b;
 
     font-size: 13px;
 
@@ -556,7 +690,6 @@
 /* ========================================
    CURSOS
 ======================================== */
-
 .dashboard-courses {
     margin-top: 22px;
 }
@@ -564,7 +697,7 @@
 .dashboard-courses h3 {
     margin: 0 0 13px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 15px;
 }
@@ -579,6 +712,7 @@
 
 .dashboard-course {
     display: flex;
+
     flex-direction: column;
 
     gap: 5px;
@@ -587,19 +721,19 @@
 
     background: #f8fafc;
 
-    border: 1px solid #e4e9f0;
+    border: 1px solid #e2e8f0;
 
     border-radius: 10px;
 }
 
 .dashboard-course strong {
-    color: #17365d;
+    color: #172033;
 
     font-size: 13px;
 }
 
 .dashboard-course span {
-    color: #718198;
+    color: #64748b;
 
     font-size: 12px;
 }
@@ -611,123 +745,196 @@
 
 .candidaturas-list {
     display: flex;
-
     flex-direction: column;
-
     gap: 16px;
 }
 
 .candidatura-card {
+    position: relative;
+
     display: flex;
-
     justify-content: space-between;
-
     align-items: flex-start;
 
-    gap: 25px;
+    gap: 30px;
 
-    padding: 22px;
+    padding: 24px 26px;
 
     background: #ffffff;
 
-    border: 1px solid #e3e9f1;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
 
-    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
 
-    box-shadow: 0 6px 20px rgba(23, 54, 93, 0.05);
+    overflow: hidden;
 
-    transition: 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
+
+
+/* IDENTIDADE DA CANDIDATURA */
+
+.candidatura-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: linear-gradient(180deg,
+            #2563eb,
+            #3b82f6);
+}
+
 
 .candidatura-card:hover {
     transform: translateY(-2px);
 
-    box-shadow: 0 10px 25px rgba(23, 54, 93, 0.08);
+    border-color: #cbd5e1;
+
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
 }
+
+
+/* CONTEÚDO PRINCIPAL */
 
 .candidatura-main {
     flex: 1;
+
+    min-width: 0;
 }
+
+
+/* EMPRESA */
 
 .candidatura-company {
     display: block;
 
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 
     color: #2563eb;
 
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
 }
+
+
+/* CARGO */
 
 .candidatura-main h3 {
     margin: 0 0 10px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 20px;
+    font-weight: 750;
+
+    line-height: 1.3;
 }
 
-.candidatura-description {
-    margin: 0 0 14px;
 
-    color: #61738d;
+/* DESCRIÇÃO */
+
+.candidatura-description {
+    max-width: 720px;
+
+    margin: 0 0 16px;
+
+    color: #64748b;
 
     font-size: 13px;
 
-    line-height: 1.5;
+    line-height: 1.6;
 }
+
+
+/* INFORMAÇÕES DA VAGA */
 
 .candidatura-info {
     display: flex;
 
     flex-wrap: wrap;
 
-    gap: 14px;
+    gap: 10px;
+}
 
-    color: #61738d;
+.candidatura-info span {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+
+    color: #475569;
 
     font-size: 12px;
     font-weight: 600;
 }
 
+
+/* ÁREA DO STATUS */
+
 .candidatura-status-area {
     display: flex;
 
     flex-direction: column;
-
     align-items: flex-end;
 
     gap: 10px;
 
     min-width: 150px;
+
+    padding-top: 2px;
 }
+
+
+/* STATUS */
 
 .candidatura-status {
     display: inline-flex;
 
     align-items: center;
+    justify-content: center;
 
     padding: 8px 13px;
 
-    background: #e8f7ee;
+    background: #dcfce7;
 
-    color: #168344;
+    color: #15803d;
 
-    border: 1px solid #c9ecd7;
-
+    border: 1px solid #bbf7d0;
     border-radius: 20px;
 
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+
+    white-space: nowrap;
 }
+
+
+/* DATA */
 
 .candidatura-date {
-    color: #718198;
+    color: #64748b;
 
     font-size: 11px;
-}
 
+    text-align: right;
+}
 
 /* ========================================
    SEM CANDIDATURAS
@@ -740,7 +947,7 @@
 
     background: #ffffff;
 
-    border: 1px dashed #ccd6e3;
+    border: 1px dashed #cbd5e1;
 
     border-radius: 14px;
 }
@@ -754,7 +961,7 @@
 .candidaturas-empty h3 {
     margin: 0 0 8px;
 
-    color: #17365d;
+    color: #172033;
 
     font-size: 18px;
 }
@@ -764,7 +971,7 @@
 
     margin: 0 auto 18px;
 
-    color: #61738d;
+    color: #64748b;
 
     font-size: 14px;
 
@@ -778,20 +985,23 @@
 
     padding: 11px 20px;
 
-    background: #ff7a00;
+    background: #f97316;
 
     color: #ffffff;
 
     font-size: 13px;
+
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .candidaturas-vagas-button:hover {
-    background: #e86e00;
+    background: #ea580c;
+
+    transform: translateY(-1px);
 }
 
 
@@ -810,11 +1020,15 @@
 
     padding: 30px;
 
-    background: #17365d;
+    background: linear-gradient(135deg,
+            #0b0f19,
+            #111827);
+
+    border: 1px solid #1e293b;
 
     border-radius: 16px;
 
-    box-shadow: 0 10px 30px rgba(23, 54, 93, 0.12);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 }
 
 .dashboard-cta span {
@@ -822,9 +1036,10 @@
 
     margin-bottom: 8px;
 
-    color: #8fb4e8;
+    color: #60a5fa;
 
     font-size: 11px;
+
     font-weight: 800;
 
     letter-spacing: 1px;
@@ -841,7 +1056,7 @@
 .dashboard-cta p {
     margin: 0;
 
-    color: #d3deec;
+    color: #cbd5e1;
 
     font-size: 13px;
 }
@@ -855,22 +1070,142 @@
 
     padding: 12px 20px;
 
-    background: #ff7a00;
+    background: #f97316;
 
     color: #ffffff;
 
     font-size: 13px;
+
     font-weight: 700;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .dashboard-cta button:hover {
-    background: #e86e00;
+    background: #ea580c;
 
     transform: translateY(-1px);
+}
+
+
+/* ========================================
+   TOAST - NOTIFICAÇÕES
+======================================== */
+
+.dashboard-toast {
+    position: fixed;
+
+    right: 24px;
+
+    bottom: 24px;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 280px;
+
+    max-width: 420px;
+
+    padding: 16px 20px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    animation: dashboardToastEntrada 0.3s ease-out;
+}
+
+.dashboard-toast-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+
+/* SUCESSO */
+
+.dashboard-toast.sucesso {
+    border-left: 4px solid #16a34a;
+}
+
+.dashboard-toast.sucesso .dashboard-toast-icon {
+    background: #dcfce7;
+
+    color: #16a34a;
+}
+
+
+/* ERRO */
+
+.dashboard-toast.erro {
+    border-left: 4px solid #dc2626;
+}
+
+.dashboard-toast.erro .dashboard-toast-icon {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+/* AVISO */
+
+.dashboard-toast.aviso {
+    border-left: 4px solid #f59e0b;
+}
+
+.dashboard-toast.aviso .dashboard-toast-icon {
+    background: #fef3c7;
+
+    color: #d97706;
+}
+
+
+/* ========================================
+   ANIMAÇÃO
+======================================== */
+
+@keyframes dashboardToastEntrada {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+
 }
 
 
@@ -881,7 +1216,19 @@
 @media (max-width: 768px) {
 
     .dashboard-navbar {
-        padding: 0 20px;
+        height: auto;
+
+        min-height: 72px;
+
+        padding: 15px 20px;
+
+        gap: 15px;
+    }
+
+    .dashboard-navbar-actions {
+        flex-wrap: wrap;
+
+        justify-content: flex-end;
     }
 
     .dashboard-container {
@@ -946,6 +1293,23 @@
         min-width: 0;
 
         box-sizing: border-box;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-toast {
+        right: 16px;
+
+        left: 16px;
+
+        bottom: 16px;
+
+        min-width: auto;
+
+        max-width: none;
     }
 
 }

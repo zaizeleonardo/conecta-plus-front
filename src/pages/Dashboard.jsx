@@ -26,6 +26,25 @@ function Dashboard({
   const [salvandoCompetencia, setSalvandoCompetencia] = useState(false)
 
   // ==============================
+  // TOAST
+  // ==============================
+
+  const [toast, setToast] = useState(null)
+
+  function mostrarToast(mensagem, tipo = 'sucesso') {
+
+    setToast({
+      mensagem,
+      tipo
+    })
+
+    setTimeout(() => {
+      setToast(null)
+    }, 3000)
+
+  }
+
+  // ==============================
   // IDENTIFICAR PERFIL
   // ==============================
 
@@ -58,7 +77,6 @@ function Dashboard({
 
       }
 
-
       // ==============================
       // CARREGAR TODAS AS COMPETÊNCIAS
       // ==============================
@@ -76,7 +94,6 @@ function Dashboard({
 
       }
 
-
       // ==============================
       // CARREGAR VAGAS
       // ==============================
@@ -92,7 +109,6 @@ function Dashboard({
         setVagas(dadosVagas)
 
       }
-
 
       // ==============================
       // CARREGAR CANDIDATURAS
@@ -111,7 +127,6 @@ function Dashboard({
         setCandidaturas(dadosCandidaturas)
 
       }
-
 
       // ==============================
       // CARREGAR DIAGNÓSTICO
@@ -146,15 +161,44 @@ function Dashboard({
 
   }
 
+  // ==============================
+  // ATUALIZAR DIAGNÓSTICO
+  // ==============================
+
+  async function atualizarDiagnostico() {
+
+    try {
+
+      const respostaDiagnostico =
+        await fetchAPI(
+          `/diagnosticos/usuarios/${usuario.id}/vagas/1`
+        )
+
+      if (respostaDiagnostico.ok) {
+
+        const dadosDiagnostico =
+          await respostaDiagnostico.json()
+
+        setDiagnostico(dadosDiagnostico)
+
+      }
+
+    } catch (erro) {
+
+      console.error(
+        'Erro ao atualizar diagnóstico:',
+        erro
+      )
+
+    }
+
+  }
 
   // ==============================
   // EXECUTAR AO ABRIR DASHBOARD
   // ==============================
 
   useEffect(() => {
-
-    // Empresa não precisa carregar
-    // competências, candidaturas ou diagnóstico.
 
     if (isEmpresa) {
 
@@ -177,8 +221,9 @@ function Dashboard({
 
     if (!competenciaSelecionada) {
 
-      alert(
-        'Selecione uma competência.'
+      mostrarToast(
+        'Selecione uma competência.',
+        'aviso'
       )
 
       return
@@ -189,9 +234,12 @@ function Dashboard({
 
       setSalvandoCompetencia(true)
 
+      const competenciaId =
+        Number(competenciaSelecionada)
+
       const resposta =
         await fetchAPI(
-          `/usuarios/${usuario.id}/competencias/${competenciaSelecionada}`,
+          `/usuarios/${usuario.id}/competencias/${competenciaId}`,
           {
             method: 'POST'
           }
@@ -202,23 +250,54 @@ function Dashboard({
         const mensagem =
           await resposta.text()
 
-        alert(
+        mostrarToast(
           mensagem ||
-          'Não foi possível adicionar a competência.'
+          'Não foi possível adicionar a competência.',
+          'erro'
         )
 
         return
 
       }
 
-      alert(
-        'Competência adicionada com sucesso!'
-      )
+      // Encontrar a competência cadastrada
+
+      const competenciaAdicionada =
+        todasCompetencias.find(
+          (item) =>
+            item.id === competenciaId
+        )
+
+      // Atualizar somente a lista de competências
+
+      if (competenciaAdicionada) {
+
+        setCompetencias(
+          (anteriores) => [
+            ...anteriores,
+            competenciaAdicionada
+          ]
+        )
+
+      }
 
       setCompetenciaSelecionada('')
       setMostrarAdicionar(false)
 
-      await carregarDados()
+      // ==============================
+      // CONFIRMAÇÃO IMEDIATA
+      // ==============================
+
+      mostrarToast(
+        'Competência adicionada com sucesso!',
+        'sucesso'
+      )
+
+      // ==============================
+      // ATUALIZAR DIAGNÓSTICO
+      // ==============================
+
+      await atualizarDiagnostico()
 
     } catch (erro) {
 
@@ -227,8 +306,9 @@ function Dashboard({
         erro
       )
 
-      alert(
-        'Não foi possível conectar ao servidor.'
+      mostrarToast(
+        'Não foi possível conectar ao servidor.',
+        'erro'
       )
 
     } finally {
@@ -277,19 +357,33 @@ function Dashboard({
 
       if (!resposta.ok) {
 
-        alert(
-          'Não foi possível remover a competência.'
+        mostrarToast(
+          'Não foi possível remover a competência.',
+          'erro'
         )
 
         return
 
       }
 
-      alert(
-        'Competência removida com sucesso!'
+      // Remove somente do estado local
+
+      setCompetencias(
+        (anteriores) =>
+          anteriores.filter(
+            (item) =>
+              item.id !== competenciaId
+          )
       )
 
-      await carregarDados()
+      // Atualiza o diagnóstico
+
+      await atualizarDiagnostico()
+
+      mostrarToast(
+        'Competência removida com sucesso!',
+        'sucesso'
+      )
 
     } catch (erro) {
 
@@ -298,8 +392,9 @@ function Dashboard({
         erro
       )
 
-      alert(
-        'Não foi possível conectar ao servidor.'
+      mostrarToast(
+        'Não foi possível conectar ao servidor.',
+        'erro'
       )
 
     }
@@ -420,7 +515,6 @@ function Dashboard({
         =========================== */}
 
         <main className="dashboard-container">
-
 
           {/* ==========================
               CABEÇALHO
@@ -1376,6 +1470,36 @@ function Dashboard({
 
 
       </main>
+
+
+      {/* ==========================
+          TOAST
+      =========================== */}
+
+      {toast && (
+
+        <div
+          className={`dashboard-toast ${toast.tipo}`}
+        >
+
+          <span className="dashboard-toast-icon">
+
+            {toast.tipo === 'sucesso' && '✓'}
+
+            {toast.tipo === 'erro' && '✕'}
+
+            {toast.tipo === 'aviso' && '⚠'}
+
+          </span>
+
+
+          <span>
+            {toast.mensagem}
+          </span>
+
+        </div>
+
+      )}
 
     </div>
 
