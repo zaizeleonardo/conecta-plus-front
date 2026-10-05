@@ -1,3 +1,16 @@
+import {
+    BookOpen,
+    BriefcaseBusiness,
+    CircleAlert,
+    CircleCheck,
+    FileCheck,
+    MapPin,
+    Pencil,
+    Target,
+    Trash2,
+    Wallet
+} from 'lucide-react'
+
 function VagaCard({
     vaga,
     inscrito,
@@ -10,6 +23,7 @@ function VagaCard({
 }) {
 
     return (
+
         <article className="vaga-card">
 
             {/* INFORMAÇÕES DA VAGA */}
@@ -19,101 +33,203 @@ function VagaCard({
                 <div>
 
                     <span className="vaga-company">
+
                         {vaga.empresa}
+
                     </span>
 
                     <h2>
+
                         {vaga.titulo}
+
                     </h2>
 
                 </div>
 
                 {inscrito && (
+
                     <span className="vaga-status">
-                        ✓ Candidatura enviada
+
+                        <CircleCheck size={15} strokeWidth={2.2} />
+
+                        Candidatura enviada
+
                     </span>
+
                 )}
 
             </div>
 
+
             <p className="vaga-description">
+
                 {vaga.descricao}
+
             </p>
+
 
             <div className="vaga-info">
 
                 <span>
-                    📍 {vaga.cidade}
+
+                    <MapPin size={15} strokeWidth={2} />
+
+                    {vaga.cidade}
+
                 </span>
+
 
                 <span>
-                    💼 {vaga.modalidade}
+
+                    <BriefcaseBusiness size={15} strokeWidth={2} />
+
+                    {vaga.modalidade}
+
                 </span>
 
+
                 {vaga.salario && (
+
                     <span>
-                        💰 R$ {Number(vaga.salario).toLocaleString(
+
+                        <Wallet size={15} strokeWidth={2} />
+
+                        R$ {Number(vaga.salario).toLocaleString(
+
                             'pt-BR',
+
                             {
+
                                 minimumFractionDigits: 2
+
                             }
+
                         )}
+
                     </span>
+
                 )}
 
             </div>
+
 
             {/* AÇÕES */}
 
             <div className="vaga-actions">
 
                 <button
+
                     className="vaga-compatibilidade-button"
+
                     onClick={() => onCompatibilidade(vaga.id)}
+
                 >
-                    Ver compatibilidade →
+
+                    <Target size={16} strokeWidth={2.2} />
+
+                    Ver compatibilidade
+
                 </button>
 
+
                 <button
+
                     className={
+
                         inscrito
+
                             ? 'vaga-candidatura-button inscrito'
+
                             : 'vaga-candidatura-button'
+
                     }
+
                     onClick={() => onCandidatar(vaga.id)}
+
                     disabled={
+
                         inscrito ||
+
                         carregandoCandidatura === vaga.id
+
                     }
+
                 >
+
                     {carregandoCandidatura === vaga.id
+
                         ? 'Enviando...'
+
                         : inscrito
-                            ? '✓ Candidatura enviada'
-                            : 'Candidatar-se'}
+
+                            ? (
+
+                                <>
+
+                                    <CircleCheck size={16} strokeWidth={2.2} />
+
+                                    Candidatura enviada
+
+                                </>
+
+                            )
+
+                            : (
+
+                                <>
+
+                                    <FileCheck size={16} strokeWidth={2.1} />
+
+                                    Candidatar-se
+
+                                </>
+
+                            )}
+
                 </button>
+
 
                 {/* GERENCIAMENTO */}
 
                 {onEditar && (
+
                     <button
+
                         className="vaga-edit-button"
+
                         onClick={() => onEditar(vaga)}
+
                     >
-                        ✏️ Editar
+
+                        <Pencil size={16} strokeWidth={2.1} />
+
+                        Editar
+
                     </button>
+
                 )}
 
+
                 {onExcluir && (
+
                     <button
+
                         className="vaga-delete-button"
+
                         onClick={() => onExcluir(vaga)}
+
                     >
-                        🗑️ Excluir
+
+                        <Trash2 size={16} strokeWidth={2.1} />
+
+                        Excluir
+
                     </button>
+
                 )}
 
             </div>
+
 
             {/* DIAGNÓSTICO */}
 
@@ -126,43 +242,59 @@ function VagaCard({
                         <div>
 
                             <span>
+
                                 DIAGNÓSTICO
+
                             </span>
 
                             <h3>
+
                                 Compatibilidade com a vaga
+
                             </h3>
 
                         </div>
 
                     </div>
 
+
                     {/* PORCENTAGEM */}
 
                     <div className="diagnostico-score">
 
                         <strong>
+
                             {diagnostico.percentualCompatibilidade?.toFixed(2)}%
+
                         </strong>
 
                         <span>
+
                             de compatibilidade
+
                         </span>
 
                     </div>
+
 
                     {/* BARRA */}
 
                     <div className="diagnostico-progress">
 
                         <div
+
                             className="diagnostico-progress-bar"
+
                             style={{
+
                                 width: `${diagnostico.percentualCompatibilidade}%`
+
                             }}
+
                         />
 
                     </div>
+
 
                     {/* COMPETÊNCIAS */}
 
@@ -171,7 +303,11 @@ function VagaCard({
                         <div>
 
                             <h4>
-                                ✓ Competências encontradas
+
+                                <CircleCheck size={17} strokeWidth={2.2} />
+
+                                Competências encontradas
+
                             </h4>
 
                             {diagnostico.competenciasAtendidas?.length > 0 ? (
@@ -179,13 +315,17 @@ function VagaCard({
                                 <ul>
 
                                     {diagnostico.competenciasAtendidas.map(
+
                                         (competencia, index) => (
 
                                             <li key={index}>
+
                                                 {competencia.nome}
+
                                             </li>
 
                                         )
+
                                     )}
 
                                 </ul>
@@ -193,17 +333,24 @@ function VagaCard({
                             ) : (
 
                                 <p>
+
                                     Nenhuma competência encontrada.
+
                                 </p>
 
                             )}
 
                         </div>
 
+
                         <div>
 
                             <h4>
-                                ⚠ Competências que faltam
+
+                                <CircleAlert size={17} strokeWidth={2.2} />
+
+                                Competências que faltam
+
                             </h4>
 
                             {diagnostico.competenciasFaltantes?.length > 0 ? (
@@ -211,13 +358,17 @@ function VagaCard({
                                 <ul>
 
                                     {diagnostico.competenciasFaltantes.map(
+
                                         (competencia, index) => (
 
                                             <li key={index}>
+
                                                 {competencia.nome}
+
                                             </li>
 
                                         )
+
                                     )}
 
                                 </ul>
@@ -225,7 +376,9 @@ function VagaCard({
                             ) : (
 
                                 <p>
+
                                     Você possui todas as competências necessárias!
+
                                 </p>
 
                             )}
@@ -234,6 +387,7 @@ function VagaCard({
 
                     </div>
 
+
                     {/* CURSOS */}
 
                     {diagnostico.cursosRecomendados?.length > 0 && (
@@ -241,30 +395,43 @@ function VagaCard({
                         <div className="diagnostico-cursos">
 
                             <h4>
-                                📚 Cursos recomendados
+
+                                <BookOpen size={17} strokeWidth={2} />
+
+                                Cursos recomendados
+
                             </h4>
 
                             <div className="curso-list">
 
                                 {diagnostico.cursosRecomendados.map(
+
                                     (curso) => (
 
                                         <div
+
                                             className="curso-card"
+
                                             key={curso.id}
+
                                         >
 
                                             <strong>
+
                                                 {curso.nome}
+
                                             </strong>
 
                                             <span>
+
                                                 {curso.plataforma}
+
                                             </span>
 
                                         </div>
 
                                     )
+
                                 )}
 
                             </div>
@@ -278,7 +445,9 @@ function VagaCard({
             )}
 
         </article>
+
     )
+
 }
 
 export default VagaCard

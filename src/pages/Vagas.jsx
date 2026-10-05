@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react'
 import './Vagas.css'
 import { fetchAPI } from '../config/api'
+import {
+  MapPin,
+  BriefcaseBusiness,
+  Wallet,
+  Target,
+  FileCheck,
+  CircleCheck,
+  CircleAlert,
+  BookOpen,
+  X
+} from 'lucide-react'
 
 function Vagas({ usuario, onVoltar, onSair }) {
 
@@ -17,29 +28,45 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
       setCarregando(true)
 
-      // Carrega as vagas
-      const respostaVagas = await fetchAPI('/vagas')
+      // ==============================
+      // CARREGA AS VAGAS
+      // ==============================
+
+      const respostaVagas =
+        await fetchAPI('/vagas')
 
       if (respostaVagas.ok) {
 
-        const dadosVagas = await respostaVagas.json()
+        const dadosVagas =
+          await respostaVagas.json()
 
         setVagas(dadosVagas)
 
       }
 
 
-      // Carrega as candidaturas do usuário
-      const respostaCandidaturas = await fetchAPI(
-        `/candidaturas/usuario/${usuario.id}`
-      )
+      // ==============================
+      // CARREGA CANDIDATURAS
+      // SOMENTE SE ESTIVER LOGADO
+      // ==============================
 
-      if (respostaCandidaturas.ok) {
+      if (usuario?.id) {
 
-        const dadosCandidaturas =
-          await respostaCandidaturas.json()
+        const respostaCandidaturas =
+          await fetchAPI(
+            `/candidaturas/usuario/${usuario.id}`
+          )
 
-        setCandidaturas(dadosCandidaturas)
+        if (respostaCandidaturas.ok) {
+
+          const dadosCandidaturas =
+            await respostaCandidaturas.json()
+
+          setCandidaturas(
+            dadosCandidaturas
+          )
+
+        }
 
       }
 
@@ -62,16 +89,30 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
     carregarDados()
 
-  }, [usuario.id])
+  }, [usuario?.id])
 
+
+  // ==============================
+  // VER COMPATIBILIDADE
+  // ==============================
 
   async function verCompatibilidade(vagaId) {
 
+    if (!usuario?.id) {
+
+      alert(
+        'Faça login para visualizar sua compatibilidade com esta vaga.'
+      )
+
+      return
+    }
+
     try {
 
-      const resposta = await fetchAPI(
-        `/diagnosticos/usuarios/${usuario.id}/vagas/${vagaId}`
-      )
+      const resposta =
+        await fetchAPI(
+          `/diagnosticos/usuarios/${usuario.id}/vagas/${vagaId}`
+        )
 
       if (!resposta.ok) {
 
@@ -82,11 +123,15 @@ function Vagas({ usuario, onVoltar, onSair }) {
         return
       }
 
-      const dados = await resposta.json()
+      const dados =
+        await resposta.json()
 
       setDiagnosticos((anterior) => ({
+
         ...anterior,
+
         [vagaId]: dados
+
       }))
 
     } catch (erro) {
@@ -103,12 +148,26 @@ function Vagas({ usuario, onVoltar, onSair }) {
   }
 
 
+  // ==============================
+  // CANDIDATAR-SE
+  // ==============================
+
   async function candidatar(vagaId) {
 
-    const jaCandidatado = candidaturas.some(
-      (candidatura) =>
-        candidatura.vagaId === vagaId
-    )
+    if (!usuario?.id) {
+
+      alert(
+        'Faça login para se candidatar a uma vaga.'
+      )
+
+      return
+    }
+
+    const jaCandidatado =
+      candidaturas.some(
+        (candidatura) =>
+          candidatura.vagaId === vagaId
+      )
 
     if (jaCandidatado) {
 
@@ -123,12 +182,13 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
       setCarregandoCandidatura(vagaId)
 
-      const resposta = await fetchAPI(
-        `/candidaturas?usuarioId=${usuario.id}&vagaId=${vagaId}`,
-        {
-          method: 'POST'
-        }
-      )
+      const resposta =
+        await fetchAPI(
+          `/candidaturas?usuarioId=${usuario.id}&vagaId=${vagaId}`,
+          {
+            method: 'POST'
+          }
+        )
 
       if (resposta.status === 409) {
 
@@ -153,10 +213,12 @@ function Vagas({ usuario, onVoltar, onSair }) {
       const novaCandidatura =
         await resposta.json()
 
-      setCandidaturas((anterior) => [
-        ...anterior,
-        novaCandidatura
-      ])
+      setCandidaturas(
+        (anterior) => [
+          ...anterior,
+          novaCandidatura
+        ]
+      )
 
       alert(
         '🎉 Candidatura enviada com sucesso!'
@@ -181,6 +243,10 @@ function Vagas({ usuario, onVoltar, onSair }) {
   }
 
 
+  // ==============================
+  // VERIFICA SE JÁ SE CANDIDATOU
+  // ==============================
+
   function jaCandidatado(vagaId) {
 
     return candidaturas.some(
@@ -191,11 +257,17 @@ function Vagas({ usuario, onVoltar, onSair }) {
   }
 
 
+  // ==============================
+  // FECHAR DIAGNÓSTICO
+  // ==============================
+
   function fecharDiagnostico(vagaId) {
 
     setDiagnosticos((anterior) => {
 
-      const novo = { ...anterior }
+      const novo = {
+        ...anterior
+      }
 
       delete novo[vagaId]
 
@@ -206,12 +278,18 @@ function Vagas({ usuario, onVoltar, onSair }) {
   }
 
 
+  // ==============================
+  // CARREGAMENTO
+  // ==============================
+
   if (carregando) {
 
     return (
+
       <div className="vagas-loading">
         Carregando vagas...
       </div>
+
     )
 
   }
@@ -221,7 +299,9 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
     <div className="vagas-page">
 
-      {/* NAVBAR */}
+      {/* ==============================
+          NAVBAR
+      ============================== */}
 
       <header className="vagas-navbar">
 
@@ -235,7 +315,7 @@ function Vagas({ usuario, onVoltar, onSair }) {
             onClick={onVoltar}
             className="vagas-back-button"
           >
-            ← Dashboard
+            Dashboard
           </button>
 
           <button
@@ -250,7 +330,9 @@ function Vagas({ usuario, onVoltar, onSair }) {
       </header>
 
 
-      {/* CONTEÚDO */}
+      {/* ==============================
+          CONTEÚDO
+      ============================== */}
 
       <main className="vagas-container">
 
@@ -276,7 +358,9 @@ function Vagas({ usuario, onVoltar, onSair }) {
         </div>
 
 
-        {/* LISTA DE VAGAS */}
+        {/* ==============================
+            LISTA DE VAGAS
+        ============================== */}
 
         <div className="vagas-list">
 
@@ -311,7 +395,9 @@ function Vagas({ usuario, onVoltar, onSair }) {
                   key={vaga.id}
                 >
 
-                  {/* INFORMAÇÕES DA VAGA */}
+                  {/* ==============================
+                      INFORMAÇÕES DA VAGA
+                  ============================== */}
 
                   <div className="vaga-card-top">
 
@@ -330,7 +416,8 @@ function Vagas({ usuario, onVoltar, onSair }) {
                     {inscrito && (
 
                       <span className="vaga-status">
-                        ✓ Candidatura enviada
+                        <CircleCheck size={15} strokeWidth={2.2} />
+                        Candidatura enviada
                       </span>
 
                     )}
@@ -346,17 +433,23 @@ function Vagas({ usuario, onVoltar, onSair }) {
                   <div className="vaga-info">
 
                     <span>
-                      📍 {vaga.cidade}
+                      <MapPin size={15} strokeWidth={2} />
+                      {vaga.cidade}
                     </span>
 
                     <span>
-                      💼 {vaga.modalidade}
+                      <BriefcaseBusiness size={15} strokeWidth={2} />
+                      {vaga.modalidade}
                     </span>
 
                     {vaga.salario && (
 
                       <span>
-                        💰 R$ {Number(vaga.salario).toLocaleString(
+                        <Wallet size={15} strokeWidth={2} />
+                        R${' '}
+                        {Number(
+                          vaga.salario
+                        ).toLocaleString(
                           'pt-BR',
                           {
                             minimumFractionDigits: 2
@@ -369,17 +462,22 @@ function Vagas({ usuario, onVoltar, onSair }) {
                   </div>
 
 
-                  {/* BOTÕES */}
+                  {/* ==============================
+                      BOTÕES
+                  ============================== */}
 
                   <div className="vaga-actions">
 
                     <button
                       className="vaga-compatibilidade-button"
                       onClick={() =>
-                        verCompatibilidade(vaga.id)
+                        verCompatibilidade(
+                          vaga.id
+                        )
                       }
                     >
-                      Ver compatibilidade →
+                      <Target size={16} strokeWidth={2} />
+                      Ver compatibilidade
                     </button>
 
 
@@ -390,26 +488,38 @@ function Vagas({ usuario, onVoltar, onSair }) {
                           : 'vaga-candidatura-button'
                       }
                       onClick={() =>
-                        candidatar(vaga.id)
+                        candidatar(
+                          vaga.id
+                        )
                       }
                       disabled={
                         inscrito ||
-                        carregandoCandidatura === vaga.id
+                        carregandoCandidatura ===
+                        vaga.id
                       }
                     >
 
-                      {carregandoCandidatura === vaga.id
+                      {carregandoCandidatura ===
+                        vaga.id
                         ? 'Enviando...'
                         : inscrito
-                          ? '✓ Candidatura enviada'
-                          : 'Candidatar-se'}
+                          ? <>
+                            <CircleCheck size={16} strokeWidth={2.2} />
+                            Candidatura enviada
+                          </>
+                          : <>
+                            <FileCheck size={16} strokeWidth={2} />
+                            Candidatar-se
+                          </>}
 
                     </button>
 
                   </div>
 
 
-                  {/* DIAGNÓSTICO */}
+                  {/* ==============================
+                      DIAGNÓSTICO
+                  ============================== */}
 
                   {diagnostico && (
 
@@ -431,11 +541,14 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
                         <button
                           onClick={() =>
-                            fecharDiagnostico(vaga.id)
+                            fecharDiagnostico(
+                              vaga.id
+                            )
                           }
                           className="diagnostico-close"
+                          title="Fechar diagnóstico"
                         >
-                          ×
+                          <X size={18} strokeWidth={2.2} />
                         </button>
 
                       </div>
@@ -446,7 +559,10 @@ function Vagas({ usuario, onVoltar, onSair }) {
                       <div className="diagnostico-score">
 
                         <strong>
-                          {diagnostico.percentualCompatibilidade?.toFixed(2)}%
+                          {diagnostico
+                            .percentualCompatibilidade
+                            ?.toFixed(2)}
+                          %
                         </strong>
 
                         <span>
@@ -477,22 +593,34 @@ function Vagas({ usuario, onVoltar, onSair }) {
                         <div>
 
                           <h4>
-                            ✓ Competências encontradas
+                            <CircleCheck size={17} strokeWidth={2.2} />
+                            Competências encontradas
                           </h4>
 
-                          {diagnostico.competenciasAtendidas?.length > 0 ? (
+                          {diagnostico
+                            .competenciasAtendidas
+                            ?.length > 0 ? (
 
                             <ul>
 
-                              {diagnostico.competenciasAtendidas.map(
-                                (competencia, index) => (
+                              {diagnostico
+                                .competenciasAtendidas
+                                .map(
+                                  (
+                                    competencia,
+                                    index
+                                  ) => (
 
-                                  <li key={index}>
-                                    {competencia.nome}
-                                  </li>
+                                    <li
+                                      key={index}
+                                    >
+                                      {
+                                        competencia.nome
+                                      }
+                                    </li>
 
-                                )
-                              )}
+                                  )
+                                )}
 
                             </ul>
 
@@ -510,22 +638,34 @@ function Vagas({ usuario, onVoltar, onSair }) {
                         <div>
 
                           <h4>
-                            ⚠ Competências que faltam
+                            <CircleAlert size={17} strokeWidth={2.2} />
+                            Competências que faltam
                           </h4>
 
-                          {diagnostico.competenciasFaltantes?.length > 0 ? (
+                          {diagnostico
+                            .competenciasFaltantes
+                            ?.length > 0 ? (
 
                             <ul>
 
-                              {diagnostico.competenciasFaltantes.map(
-                                (competencia, index) => (
+                              {diagnostico
+                                .competenciasFaltantes
+                                .map(
+                                  (
+                                    competencia,
+                                    index
+                                  ) => (
 
-                                  <li key={index}>
-                                    {competencia.nome}
-                                  </li>
+                                    <li
+                                      key={index}
+                                    >
+                                      {
+                                        competencia.nome
+                                      }
+                                    </li>
 
-                                )
-                              )}
+                                  )
+                                )}
 
                             </ul>
 
@@ -545,42 +685,47 @@ function Vagas({ usuario, onVoltar, onSair }) {
 
                       {/* CURSOS */}
 
-                      {diagnostico.cursosRecomendados?.length > 0 && (
+                      {diagnostico
+                        .cursosRecomendados
+                        ?.length > 0 && (
 
-                        <div className="diagnostico-cursos">
+                          <div className="diagnostico-cursos">
 
-                          <h4>
-                            📚 Cursos recomendados
-                          </h4>
+                            <h4>
+                              <BookOpen size={18} strokeWidth={2} />
+                              Cursos recomendados
+                            </h4>
 
-                          <div className="curso-list">
+                            <div className="curso-list">
 
-                            {diagnostico.cursosRecomendados.map(
-                              (curso) => (
+                              {diagnostico
+                                .cursosRecomendados
+                                .map(
+                                  (curso) => (
 
-                                <div
-                                  className="curso-card"
-                                  key={curso.id}
-                                >
+                                    <div
+                                      className="curso-card"
+                                      key={curso.id}
+                                    >
 
-                                  <strong>
-                                    {curso.nome}
-                                  </strong>
+                                      <strong>
+                                        {curso.nome}
+                                      </strong>
 
-                                  <span>
-                                    {curso.plataforma}
-                                  </span>
+                                      <span>
+                                        {curso.plataforma}
+                                      </span>
 
-                                </div>
+                                    </div>
 
-                              )
-                            )}
+                                  )
+                                )}
+
+                            </div>
 
                           </div>
 
-                        </div>
-
-                      )}
+                        )}
 
                     </div>
 

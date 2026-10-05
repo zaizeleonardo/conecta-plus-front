@@ -1,6 +1,19 @@
 import { useEffect, useState } from 'react'
 import './Dashboard.css'
 import { fetchAPI } from '../config/api'
+import {
+  Hand,
+  UsersRound,
+  MapPin,
+  BriefcaseBusiness,
+  Wallet,
+  CircleCheck,
+  CircleAlert,
+  BookOpen,
+  X,
+  Plus,
+  ArrowRight
+} from 'lucide-react'
 
 function Dashboard({
   usuario,
@@ -528,7 +541,7 @@ function Dashboard({
 
 
             <h1>
-              Olá, {usuario.nome}! 👋
+              Olá, {usuario.nome}! <Hand size={30} strokeWidth={2} className="dashboard-greeting-icon" />
             </h1>
 
 
@@ -647,7 +660,7 @@ function Dashboard({
               <button
                 onClick={onGerenciarVagas}
               >
-                Gerenciar vagas →
+                Gerenciar vagas <ArrowRight size={17} strokeWidth={2.2} />
               </button>
 
             </div>
@@ -688,7 +701,7 @@ function Dashboard({
             <div className="candidaturas-empty">
 
               <div className="candidaturas-empty-icon">
-                👥
+                <UsersRound size={34} strokeWidth={1.8} />
               </div>
 
 
@@ -837,7 +850,7 @@ function Dashboard({
 
 
           <h1>
-            Olá, {usuario.nome}! 👋
+            Olá, {usuario.nome}! <Hand size={30} strokeWidth={2} className="dashboard-greeting-icon" />
           </h1>
 
 
@@ -948,7 +961,8 @@ function Dashboard({
                   >
 
                     <span>
-                      ✓ {competencia.nome}
+                      <CircleCheck size={16} strokeWidth={2} />
+                      {competencia.nome}
                     </span>
 
 
@@ -961,7 +975,7 @@ function Dashboard({
                       }
                       title="Remover competência"
                     >
-                      ×
+                      <X size={15} strokeWidth={2.2} />
                     </button>
 
                   </div>
@@ -990,7 +1004,8 @@ function Dashboard({
               )
             }
           >
-            + Adicionar competência
+            <Plus size={16} strokeWidth={2.2} />
+            Adicionar competência
           </button>
 
 
@@ -1087,7 +1102,7 @@ function Dashboard({
             <div className="candidaturas-empty">
 
               <div className="candidaturas-empty-icon">
-                📋
+                <BookOpen size={34} strokeWidth={1.8} />
               </div>
 
 
@@ -1166,7 +1181,8 @@ function Dashboard({
                           {vaga?.cidade && (
 
                             <span>
-                              📍 {vaga.cidade}
+                              <MapPin size={15} strokeWidth={2} />
+                              {vaga.cidade}
                             </span>
 
                           )}
@@ -1175,7 +1191,8 @@ function Dashboard({
                           {vaga?.modalidade && (
 
                             <span>
-                              💼 {vaga.modalidade}
+                              <BriefcaseBusiness size={15} strokeWidth={2} />
+                              {vaga.modalidade}
                             </span>
 
                           )}
@@ -1184,8 +1201,8 @@ function Dashboard({
                           {vaga?.salario && (
 
                             <span>
-
-                              💰 R$ {Number(
+                              <Wallet size={15} strokeWidth={2} />
+                              R$ {Number(
                                 vaga.salario
                               ).toLocaleString(
                                 'pt-BR',
@@ -1193,7 +1210,6 @@ function Dashboard({
                                   minimumFractionDigits: 2
                                 }
                               )}
-
                             </span>
 
                           )}
@@ -1206,9 +1222,8 @@ function Dashboard({
                       <div className="candidatura-status-area">
 
                         <span className="candidatura-status">
-
-                          ✓ {candidatura.status}
-
+                          <CircleCheck size={15} strokeWidth={2.2} />
+                          {candidatura.status}
                         </span>
 
 
@@ -1315,7 +1330,8 @@ function Dashboard({
                 <div className="dashboard-diagnostic-item">
 
                   <h3>
-                    ✓ Competências encontradas
+                    <CircleCheck size={17} strokeWidth={2.2} />
+                    Competências encontradas
                   </h3>
 
 
@@ -1351,7 +1367,8 @@ function Dashboard({
                 <div className="dashboard-diagnostic-item">
 
                   <h3>
-                    ⚠ Competências que faltam
+                    <CircleAlert size={17} strokeWidth={2.2} />
+                    Competências que faltam
                   </h3>
 
 
@@ -1392,7 +1409,8 @@ function Dashboard({
                 <div className="dashboard-courses">
 
                   <h3>
-                    📚 Cursos recomendados
+                    <BookOpen size={18} strokeWidth={2} />
+                    Cursos recomendados
                   </h3>
 
 
@@ -1463,7 +1481,7 @@ function Dashboard({
           <button
             onClick={onVagas}
           >
-            Ver oportunidades →
+            Ver oportunidades <ArrowRight size={17} strokeWidth={2.2} />
           </button>
 
         </section>
@@ -1484,11 +1502,11 @@ function Dashboard({
 
           <span className="dashboard-toast-icon">
 
-            {toast.tipo === 'sucesso' && '✓'}
+            {toast.tipo === 'sucesso' && <CircleCheck size={18} strokeWidth={2.2} />}
 
-            {toast.tipo === 'erro' && '✕'}
+            {toast.tipo === 'erro' && <X size={18} strokeWidth={2.2} />}
 
-            {toast.tipo === 'aviso' && '⚠'}
+            {toast.tipo === 'aviso' && <CircleAlert size={18} strokeWidth={2.2} />}
 
           </span>
 

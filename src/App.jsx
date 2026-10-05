@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+import {
+  UserRound,
+  Building2,
+  Handshake,
+  Target,
+  BookOpen,
+  Lightbulb,
+  CircleCheck,
+  CircleAlert
+} from 'lucide-react'
+
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Vagas from './pages/Vagas'
@@ -423,7 +434,9 @@ function App() {
                     defaultChecked
                   />
 
-                  👤 Sou candidato
+                  <UserRound size={18} />
+
+                  Sou candidato
 
                 </label>
 
@@ -443,7 +456,9 @@ function App() {
                     value="EMPRESA"
                   />
 
-                  🏢 Sou empresa
+                  <Building2 size={18} />
+
+                  Sou empresa
 
                 </label>
 
@@ -694,7 +709,11 @@ function App() {
         <div className="hero-content">
 
           <span className="hero-badge">
-            🤝 Conectando pessoas a novas oportunidades
+
+            <Handshake size={16} />
+
+            Conectando pessoas a novas oportunidades
+
           </span>
 
 
@@ -754,7 +773,8 @@ function App() {
             </span>
 
             <span className="status">
-              ● Atualizado
+              <CircleCheck size={15} />
+              Atualizado
             </span>
 
           </div>
@@ -785,7 +805,7 @@ function App() {
             <div className="skill completed">
 
               <span>
-                ✓
+                <CircleCheck size={16} />
               </span>
 
               Java
@@ -796,7 +816,7 @@ function App() {
             <div className="skill completed">
 
               <span>
-                ✓
+                <CircleCheck size={16} />
               </span>
 
               SQL
@@ -807,7 +827,7 @@ function App() {
             <div className="skill completed">
 
               <span>
-                ✓
+                <CircleCheck size={16} />
               </span>
 
               Git
@@ -818,7 +838,7 @@ function App() {
             <div className="skill missing">
 
               <span>
-                !
+                <CircleAlert size={16} />
               </span>
 
               Docker
@@ -831,7 +851,11 @@ function App() {
           <div className="recommendation">
 
             <strong>
-              💡 Recomendação
+
+              <Lightbulb size={17} />
+
+              Recomendação
+
             </strong>
 
             <p>
@@ -880,7 +904,9 @@ function App() {
           <article className="feature-card">
 
             <div className="feature-icon">
-              👤
+
+              <UserRound size={28} />
+
             </div>
 
             <h3>
@@ -899,7 +925,9 @@ function App() {
           <article className="feature-card">
 
             <div className="feature-icon">
-              🎯
+
+              <Target size={28} />
+
             </div>
 
             <h3>
@@ -917,7 +945,9 @@ function App() {
           <article className="feature-card">
 
             <div className="feature-icon">
-              📚
+
+              <BookOpen size={28} />
+
             </div>
 
             <h3>
@@ -968,10 +998,13 @@ function App() {
             e indicar caminhos para continuar evoluindo.
           </p>
 
+
           <div className="about-highlight">
 
             <span>
-              💡
+
+              <Lightbulb size={22} />
+
             </span>
 
             <p>
@@ -994,6 +1027,7 @@ function App() {
             Tecnologia que também gera oportunidades.
           </h3>
 
+
           <div className="ods">
 
             <span>
@@ -1009,6 +1043,7 @@ function App() {
             </span>
 
           </div>
+
 
           <p>
             Educação de qualidade, trabalho decente
