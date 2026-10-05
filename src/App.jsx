@@ -1,17 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-import {
-  UserRound,
-  Building2,
-  Handshake,
-  Target,
-  BookOpen,
-  Lightbulb,
-  CircleCheck,
-  CircleAlert
-} from 'lucide-react'
-
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Vagas from './pages/Vagas'
@@ -21,11 +10,30 @@ import GerenciarCursos from './pages/GerenciarCursos.jsx'
 
 import API_URL from './config/api'
 
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Building2,
+  CircleAlert,
+  CircleCheck,
+  Eye,
+  EyeOff,
+  Handshake,
+  Lightbulb,
+  Target,
+  UserRound
+} from 'lucide-react'
+
 function App() {
 
   const [pagina, setPagina] = useState('inicio')
 
   const [usuarioLogado, setUsuarioLogado] = useState(null)
+
+  const [tipoCadastro, setTipoCadastro] = useState('USUARIO')
+
+  const [mostrarSenha, setMostrarSenha] = useState(false)
 
 
   // ==============================
@@ -308,7 +316,7 @@ function App() {
                   event.currentTarget
                 )
 
-              const tipoCadastro =
+              const tipoCadastroSelecionado =
                 formData.get('tipoCadastro')
 
               const usuario = {
@@ -328,13 +336,15 @@ function App() {
                 cidade:
                   formData.get('cidade'),
 
-                objetivoProfissional:
-                  formData.get(
-                    'objetivoProfissional'
-                  ),
+                ...(tipoCadastroSelecionado === 'USUARIO'
+                  ? {
+                    objetivoProfissional:
+                      formData.get('objetivoProfissional')
+                  }
+                  : {}),
 
                 perfil:
-                  tipoCadastro === 'EMPRESA'
+                  tipoCadastroSelecionado === 'EMPRESA'
                     ? 'EMPRESA'
                     : 'USUARIO'
 
@@ -381,6 +391,7 @@ function App() {
                 )
 
 
+                setMostrarSenha(false)
                 setPagina('login')
 
 
@@ -431,11 +442,11 @@ function App() {
                     type="radio"
                     name="tipoCadastro"
                     value="USUARIO"
-                    defaultChecked
+                    checked={tipoCadastro === 'USUARIO'}
+                    onChange={() => setTipoCadastro('USUARIO')}
                   />
 
-                  <UserRound size={18} />
-
+                  <UserRound size={18} strokeWidth={2} />
                   Sou candidato
 
                 </label>
@@ -454,10 +465,11 @@ function App() {
                     type="radio"
                     name="tipoCadastro"
                     value="EMPRESA"
+                    checked={tipoCadastro === 'EMPRESA'}
+                    onChange={() => setTipoCadastro('EMPRESA')}
                   />
 
-                  <Building2 size={18} />
-
+                  <Building2 size={18} strokeWidth={2} />
                   Sou empresa
 
                 </label>
@@ -513,14 +525,51 @@ function App() {
                 Senha
               </label>
 
-              <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-                minLength="8"
-                required
-              />
+              <div style={{ position: 'relative' }}>
+
+                <input
+                  type={mostrarSenha ? 'text' : 'password'}
+                  id="senha"
+                  name="senha"
+                  placeholder="Digite sua senha"
+                  minLength="8"
+                  required
+                  style={{ paddingRight: '45px' }}
+                />
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setMostrarSenha((anterior) => !anterior)
+                  }
+                  aria-label={
+                    mostrarSenha
+                      ? 'Ocultar senha'
+                      : 'Visualizar senha'
+                  }
+                  style={{
+                    position: 'absolute',
+                    right: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 0,
+                    border: 'none',
+                    background: 'transparent',
+                    color: '#64748b',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {mostrarSenha ? (
+                    <EyeOff size={18} strokeWidth={2} />
+                  ) : (
+                    <Eye size={18} strokeWidth={2} />
+                  )}
+                </button>
+
+              </div>
 
             </div>
 
@@ -563,23 +612,27 @@ function App() {
             </div>
 
 
-            {/* OBJETIVO */}
+            {/* OBJETIVO - SOMENTE PARA CANDIDATO */}
 
-            <div className="form-group">
+            {tipoCadastro === 'USUARIO' && (
 
-              <label htmlFor="objetivoProfissional">
-                Objetivo profissional / Área de atuação
-              </label>
+              <div className="form-group">
 
-              <input
-                type="text"
-                id="objetivoProfissional"
-                name="objetivoProfissional"
-                placeholder="Ex.: Desenvolvedor Backend Java"
-                required
-              />
+                <label htmlFor="objetivoProfissional">
+                  Objetivo profissional
+                </label>
 
-            </div>
+                <input
+                  type="text"
+                  id="objetivoProfissional"
+                  name="objetivoProfissional"
+                  placeholder="Ex.: Desenvolvedor Backend Java"
+                  required
+                />
+
+              </div>
+
+            )}
 
 
             {/* BOTÃO */}
@@ -606,9 +659,10 @@ function App() {
 
             <button
               className="register-link"
-              onClick={() =>
+              onClick={() => {
+                setMostrarSenha(false)
                 setPagina('login')
-              }
+              }}
             >
               Voltar para o Login
             </button>
@@ -616,11 +670,13 @@ function App() {
 
             <button
               className="back-link"
-              onClick={() =>
+              onClick={() => {
+                setMostrarSenha(false)
                 setPagina('inicio')
-              }
+              }}
             >
-              ← Voltar para o início
+              <ArrowLeft size={15} strokeWidth={2.2} />
+              Voltar para o início
             </button>
 
           </div>
@@ -709,11 +765,8 @@ function App() {
         <div className="hero-content">
 
           <span className="hero-badge">
-
-            <Handshake size={16} />
-
+            <Handshake size={16} strokeWidth={2} />
             Conectando pessoas a novas oportunidades
-
           </span>
 
 
@@ -773,7 +826,7 @@ function App() {
             </span>
 
             <span className="status">
-              <CircleCheck size={15} />
+              <CircleCheck size={15} strokeWidth={2.2} />
               Atualizado
             </span>
 
@@ -805,7 +858,7 @@ function App() {
             <div className="skill completed">
 
               <span>
-                <CircleCheck size={16} />
+                <CircleCheck size={16} strokeWidth={2.2} />
               </span>
 
               Java
@@ -816,7 +869,7 @@ function App() {
             <div className="skill completed">
 
               <span>
-                <CircleCheck size={16} />
+                <CircleCheck size={16} strokeWidth={2.2} />
               </span>
 
               SQL
@@ -827,7 +880,7 @@ function App() {
             <div className="skill completed">
 
               <span>
-                <CircleCheck size={16} />
+                <CircleCheck size={16} strokeWidth={2.2} />
               </span>
 
               Git
@@ -838,7 +891,7 @@ function App() {
             <div className="skill missing">
 
               <span>
-                <CircleAlert size={16} />
+                <CircleAlert size={16} strokeWidth={2.2} />
               </span>
 
               Docker
@@ -851,11 +904,8 @@ function App() {
           <div className="recommendation">
 
             <strong>
-
-              <Lightbulb size={17} />
-
+              <Lightbulb size={17} strokeWidth={2} />
               Recomendação
-
             </strong>
 
             <p>
@@ -904,9 +954,7 @@ function App() {
           <article className="feature-card">
 
             <div className="feature-icon">
-
-              <UserRound size={28} />
-
+              <UserRound size={26} strokeWidth={2} />
             </div>
 
             <h3>
@@ -925,9 +973,7 @@ function App() {
           <article className="feature-card">
 
             <div className="feature-icon">
-
-              <Target size={28} />
-
+              <Target size={26} strokeWidth={2} />
             </div>
 
             <h3>
@@ -945,9 +991,7 @@ function App() {
           <article className="feature-card">
 
             <div className="feature-icon">
-
-              <BookOpen size={28} />
-
+              <BookOpen size={26} strokeWidth={2} />
             </div>
 
             <h3>
@@ -998,13 +1042,10 @@ function App() {
             e indicar caminhos para continuar evoluindo.
           </p>
 
-
           <div className="about-highlight">
 
             <span>
-
-              <Lightbulb size={22} />
-
+              <Lightbulb size={22} strokeWidth={2} />
             </span>
 
             <p>
@@ -1027,7 +1068,6 @@ function App() {
             Tecnologia que também gera oportunidades.
           </h3>
 
-
           <div className="ods">
 
             <span>
@@ -1043,7 +1083,6 @@ function App() {
             </span>
 
           </div>
-
 
           <p>
             Educação de qualidade, trabalho decente
