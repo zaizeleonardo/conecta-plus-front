@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import API_URL from '../config/api'
+import { fetchAPI } from '../config/api'
 
 function CursoForm({ cursoEditando, onSalvo, onCancelar }) {
 
@@ -52,19 +52,16 @@ function CursoForm({ cursoEditando, onSalvo, onCancelar }) {
 
             setSalvando(true)
 
-            const url = cursoEditando
-                ? `${API_URL}/cursos/${cursoEditando.id}`
-                : `${API_URL}/cursos`
+            const endpoint = cursoEditando
+                ? `/cursos/${cursoEditando.id}`
+                : '/cursos'
 
             const metodo = cursoEditando
                 ? 'PUT'
                 : 'POST'
 
-            const resposta = await fetch(url, {
+            const resposta = await fetchAPI(endpoint, {
                 method: metodo,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify(formulario)
             })
 

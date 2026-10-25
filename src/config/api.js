@@ -13,9 +13,6 @@ export async function fetchAPI(endpoint, options = {}) {
     if (token) {
 
         headers.Authorization = `Bearer ${token}`
-
-        console.log('Token encontrado:', Boolean(token))
-        console.log('Authorization criado:', Boolean(headers.Authorization))
     }
 
     return fetch(`${API_URL}${endpoint}`, {
