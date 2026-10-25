@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import CursoForm from '../components/CursoForm'
 import CursoCard from '../components/CursoCard'
-import API_URL from '../config/api'
+import { fetchAPI } from '../config/api'
 import './Vagas.css'
 
 function GerenciarCursos({ onVoltar, onSair }) {
@@ -16,7 +16,7 @@ function GerenciarCursos({ onVoltar, onSair }) {
 
             setCarregando(true)
 
-            const resposta = await fetch(`${API_URL}/cursos`)
+            const resposta = await fetchAPI('/cursos')
 
             if (!resposta.ok) {
                 alert('Não foi possível carregar os cursos.')
@@ -76,8 +76,8 @@ function GerenciarCursos({ onVoltar, onSair }) {
 
         try {
 
-            const resposta = await fetch(
-                `${API_URL}/cursos/${curso.id}`,
+            const resposta = await fetchAPI(
+                `/cursos/${curso.id}`,
                 {
                     method: 'DELETE'
                 }

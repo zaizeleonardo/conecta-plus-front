@@ -28,7 +28,7 @@ function Usuarios({ onVoltar, onSair }) {
 
       setCarregando(true)
 
-      const resposta = await fetch(`${API_URL}/usuarios`)
+      const resposta = await fetchAPI('/usuarios')
 
       if (!resposta.ok) {
         alert('Não foi possível carregar os usuários.')
